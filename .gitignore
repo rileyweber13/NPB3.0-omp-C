@@ -1,0 +1,5 @@
+# build stuff
+*.o
+bin
+*params.h
+setparams
