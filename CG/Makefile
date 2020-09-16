@@ -9,7 +9,7 @@ OBJS = cg.o ${COMMON}/c_print_results.o  \
 
 include ../sys/make.common
 
-${PROGRAM}: config ${OBJS}
+${PROGRAM}: config ${OBJS} | $(BINDIR)
 	${CLINK} ${CLINKFLAGS} -o ${PROGRAM} ${OBJS} ${C_LIB}
 
 cg.o:		cg.c  npbparams.h

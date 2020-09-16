@@ -9,7 +9,7 @@ OBJS = ft.o ${COMMON}/c_${RAND}.o ${COMMON}/c_print_results.o \
 
 include ../sys/make.common
 
-${PROGRAM}: config ${OBJS}
+${PROGRAM}: config ${OBJS} | $(BINDIR)
 	${CLINK} ${CLINKFLAGS} -o ${PROGRAM} ${OBJS} ${C_LIB}
 
 ft.o:             ft.c  global.h npbparams.h

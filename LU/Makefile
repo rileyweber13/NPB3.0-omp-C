@@ -20,7 +20,7 @@ include ../sys/make.common
 
 # applu.incl: npbparams.h
 
-${PROGRAM}: config ${OBJS}
+${PROGRAM}: config ${OBJS} | $(BINDIR)
 	${CLINK} ${CLINKFLAGS} -o ${PROGRAM} ${OBJS} ${C_LIB}
 
 lu.o:		lu.c applu.h npbparams.h

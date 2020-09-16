@@ -12,7 +12,7 @@ OBJS = is.o \
        ${COMMON}/c_wtime.o
 
 
-${PROGRAM}: config ${OBJS}
+${PROGRAM}: config ${OBJS} | $(BINDIR)
 	${CLINK} ${CLINKFLAGS} -o ${PROGRAM} ${OBJS} ${C_LIB}
 
 .c.o:

@@ -9,7 +9,7 @@ OBJS = ep.o ${COMMON}/c_print_results.o ${COMMON}/c_${RAND}.o \
 
 include ../sys/make.common
 
-${PROGRAM}: config ${OBJS}
+${PROGRAM}: config ${OBJS} | $(BINDIR)
 	${CLINK} ${CLINKFLAGS} -o ${PROGRAM} ${OBJS} ${C_LIB}
 
 

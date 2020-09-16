@@ -20,6 +20,10 @@ config:
 	@cd ../sys; ${MAKE} all
 	../sys/setparams ${BENCHMARK} ${CLASS}
 
+# creates BINDIR (specified in config/make.def) if not exists
+$(BINDIR):
+	mkdir -p $@
+
 COMMON=../common
 ${COMMON}/${RAND}.o: ${COMMON}/${RAND}.f
 	cd ${COMMON}; ${FCOMPILE} ${RAND}.f
@@ -61,5 +65,3 @@ npbparams.h: ../config/make.def
 # So that "make benchmark-name" works
 ${BENCHMARK}:  default
 ${BENCHMARKU}: default
-
-
