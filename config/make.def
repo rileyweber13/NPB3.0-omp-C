@@ -10,6 +10,38 @@
 #---------------------------------------------------------------------------
 
 #---------------------------------------------------------------------------
+# Fine Hardware Visualization (FHV) configuration:
+#
+# In order to use metering with FHV, the lines below will need to be
+# un-commented and paths adjusted to match your system. Unless you have
+# customized FHV or likwid, you will only need to change `FHV_PERFMON_PREFIX`
+# and `LIKWID_PREFIX`
+#
+# Information about downloading and building FHV may be found here:
+# https://github.com/rileyweber13/fine-hardware-visualization
+#
+# Information about downloading and building likwid may be found here:
+# https://github.com/RRZE-HPC/likwid
+#
+# The final variable, "RUN_CMD_PREFIX", is provided for convenience: if these
+# tools are installed to non-standard prefixes, this command makes it easy to
+# suuply environment variables like LD_LIBRARY_PATH
+#---------------------------------------------------------------------------
+
+#FHV_PERFMON_PREFIX=/usr/local/fhv
+#LIKWID_PREFIX=/usr/local/likwid-master
+
+#FHV_INC_FLAG=-I$(FHV_PERFMON_PREFIX)/include
+#FHV_LIB_DIR=$(FHV_PERFMON_PREFIX)/lib
+#FHV_LIB_FLAGS=-L$(FHV_LIB_DIR) -lfhv_perfmon
+
+#LIKWID_INC_FLAG=-I$(LIKWID_PREFIX)/include
+#LIKWID_LIB_FLAGS=-L$(LIKWID_PREFIX)/lib -llikwid
+
+#RUN_CMD_PREFIX=LD_LIBRARY_PATH=$(LIKWID_PREFIX)/lib:$(FHV_LIB_DIR) \
+#PATH=$(LIKWID_PREFIX)/sbin:$(LIKWID_PREFIX)/bin:$$PATH
+
+#---------------------------------------------------------------------------
 # Parallel C:
 #
 # The following must be defined:
@@ -36,12 +68,12 @@ CLINK	= gcc
 #---------------------------------------------------------------------------
 # These macros are passed to the linker 
 #---------------------------------------------------------------------------
-C_LIB  = -lm
+C_LIB  = $(LIKWID_LIB_FLAGS) $(FHV_LIB_FLAGS) -lm
 
 #---------------------------------------------------------------------------
 # These macros are passed to the compiler 
 #---------------------------------------------------------------------------
-C_INC = -I../common
+C_INC = $(LIKWID_INC_FLAG) $(FHV_INC_FLAG) -I../common
 
 #---------------------------------------------------------------------------
 # Global *compile time* flags for C programs

@@ -22,6 +22,18 @@ The benchmarks were modified to match the new official 3.0 Fortran NPB.
 benchmarks. In particular, benchmarks in this release follow the same parallel
 region structure than the official 3.0 Fortran NPB.
 
+This fork of the NPB3.0-omp-C repository includes the ability to measure
+performance with the Fine Hardware Visualization (FHV) project. In order to
+use this feature, uncomment the lines in `config/make.def` under the section
+"Fine Hardware Visualization (FHV) configuration". This feature has two
+dependencies, FHV and likwid.
+
+Information about downloading and building FHV may be found here:
+https://github.com/rileyweber13/fine-hardware-visualization
+
+Information about downloading and building likwid may be found here:
+https://github.com/RRZE-HPC/likwid
+
 2. Change Log
 
 This section tracks all the modifications that were made to update the
