@@ -38,6 +38,8 @@
 #LIKWID_INC_FLAG=-I$(LIKWID_PREFIX)/include
 #LIKWID_LIB_FLAGS=-L$(LIKWID_PREFIX)/lib -llikwid
 
+#USE_FHV_FLAG=-DFHV_PERFMON
+
 #RUN_CMD_PREFIX=LD_LIBRARY_PATH=$(LIKWID_PREFIX)/lib:$(FHV_LIB_DIR) \
 #PATH=$(LIKWID_PREFIX)/sbin:$(LIKWID_PREFIX)/bin:$$PATH
 
@@ -73,7 +75,7 @@ C_LIB  = $(LIKWID_LIB_FLAGS) $(FHV_LIB_FLAGS) -lm
 #---------------------------------------------------------------------------
 # These macros are passed to the compiler 
 #---------------------------------------------------------------------------
-C_INC = $(LIKWID_INC_FLAG) $(FHV_INC_FLAG) -I../common
+C_INC = $(USE_FHV_FLAG) $(LIKWID_INC_FLAG) $(FHV_INC_FLAG) -I../common
 
 #---------------------------------------------------------------------------
 # Global *compile time* flags for C programs
