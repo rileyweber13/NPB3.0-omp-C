@@ -55,7 +55,7 @@ static void compute_rhs(void);
 static void set_constants(void);
 static void txinvr(void);
 static void tzetar(void);
-static void verify(int no_time_steps, char *class, boolean *verified);
+static void verify(int no_time_steps, char *benchmark_class, boolean *verified);
 static void x_solve(void);
 static void y_solve(void);
 static void z_solve(void);
@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
   double mflops, tmax;
   int nthreads = 1;
   boolean verified;
-  char class;
+  char benchmark_class;
   FILE *fp;
 
 /*--------------------------------------------------------------------
@@ -151,7 +151,7 @@ c-------------------------------------------------------------------*/
   timer_stop(1);
   tmax = timer_read(1);
 
-  verify(niter, &class, &verified);
+  verify(niter, &benchmark_class, &verified);
 
   if (tmax != 0) {
     mflops = ( 881.174 * pow((double)PROBLEM_SIZE, 3.0)
@@ -162,7 +162,7 @@ c-------------------------------------------------------------------*/
     mflops = 0.0;
   }
   
-  c_print_results("SP", class, grid_points[0],
+  c_print_results("SP", benchmark_class, grid_points[0],
 		  grid_points[1], grid_points[2], niter, nthreads,
 		  tmax, mflops, "          floating point", 
 		  verified, NPBVERSION, COMPILETIME, CS1, CS2, CS3, CS4, CS5, 
@@ -2043,7 +2043,7 @@ c-------------------------------------------------------------------*/
 /*--------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-static void verify(int no_time_steps, char *class, boolean *verified) {
+static void verify(int no_time_steps, char *benchmark_class, boolean *verified) {
 
 /*--------------------------------------------------------------------
 --------------------------------------------------------------------*/
@@ -2074,7 +2074,7 @@ c   compute the error norm and the residual norm, and exit if not printing
     xcr[m] = xcr[m] / dt;
   }
 
-  *class = 'U';
+  *benchmark_class = 'U';
   *verified = TRUE;
 
   for (m = 0; m < 5; m++) {
@@ -2090,7 +2090,7 @@ c    reference data for 12X12X12 grids after 100 time steps, with DT = 1.50d-02
        grid_points[2] == 12 &&
        no_time_steps == 100) {
 
-    *class = 'S';
+    *benchmark_class = 'S';
     dtref = 1.5e-2;
 
 /*--------------------------------------------------------------------
@@ -2120,7 +2120,7 @@ c    reference data for 36X36X36 grids after 400 time steps, with DT = 1.5d-03
 	     grid_points[2] == 36 &&
 	     no_time_steps == 400) {
 
-    *class = 'W';
+    *benchmark_class = 'W';
     dtref = 1.5e-3;
 
 /*--------------------------------------------------------------------
@@ -2149,7 +2149,7 @@ c    reference data for 64X64X64 grids after 400 time steps, with DT = 1.5d-03
 	     grid_points[2] == 64 &&
 	     no_time_steps == 400 ) {
 
-    *class = 'A';
+    *benchmark_class = 'A';
     dtref = 1.5e-3;
 
 /*--------------------------------------------------------------------
@@ -2179,7 +2179,7 @@ c    with DT = 1.0d-03
 	     grid_points[2] == 102 &&
 	     no_time_steps == 400) {
 
-    *class = 'B';
+    *benchmark_class = 'B';
     dtref = 1.0e-3;
 
 /*--------------------------------------------------------------------
@@ -2210,7 +2210,7 @@ c    with DT = 0.67d-03
 	     grid_points[2] == 162 &&
 	     no_time_steps == 400) {
 
-    *class = 'C';
+    *benchmark_class = 'C';
     dtref = 0.67e-3;
 
 /*--------------------------------------------------------------------
@@ -2254,27 +2254,27 @@ c    Compute the difference of solution values and the known reference values.
 c    Output the comparison of computed results to known cases.
 --------------------------------------------------------------------*/
 
-  if (*class != 'U') {
-    printf(" Verification being performed for class %1c\n", *class);
+  if (*benchmark_class != 'U') {
+    printf(" Verification being performed for class %1c\n", *benchmark_class);
     printf(" accuracy setting for epsilon = %20.13e\n", epsilon);
     
     if (fabs(dt-dtref) > epsilon) {
       *verified = FALSE;
-      *class = 'U';
+      *benchmark_class = 'U';
       printf(" DT does not match the reference value of %15.8e\n", dtref);
     }
   } else {
     printf(" Unknown class\n");
   }
 
-  if (*class != 'U') {
+  if (*benchmark_class != 'U') {
     printf(" Comparison of RMS-norms of residual\n");
   } else {
     printf(" RMS-norms of residual\n");
   }
 
   for (m = 0; m < 5; m++) {
-    if (*class == 'U') {
+    if (*benchmark_class == 'U') {
       printf("          %2d%20.13e\n", m, xcr[m]);
     } else if (xcrdif[m] > epsilon) {
       *verified = FALSE;
@@ -2286,14 +2286,14 @@ c    Output the comparison of computed results to known cases.
     }
   }
 
-  if (*class != 'U') {
+  if (*benchmark_class != 'U') {
     printf(" Comparison of RMS-norms of solution error\n");
   } else {
     printf(" RMS-norms of solution error\n");
   }
         
   for (m = 0; m < 5; m++) {
-    if (*class == 'U') {
+    if (*benchmark_class == 'U') {
       printf("          %2d%20.13e\n", m, xce[m]);
     } else if (xcedif[m] > epsilon) {
       *verified = FALSE;
@@ -2305,7 +2305,7 @@ c    Output the comparison of computed results to known cases.
     }
   }
         
-  if (*class == 'U') {
+  if (*benchmark_class == 'U') {
     printf(" No reference values provided\n");
     printf(" No verification performed\n");
   } else if (*verified) {

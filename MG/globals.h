@@ -26,7 +26,7 @@ c-------------------------------------------------------------------*/
 /* common /mg3/ */
 static int nx[MAXLEVEL+1], ny[MAXLEVEL+1], nz[MAXLEVEL+1];
 /* common /ClassType/ */
-static char Class;
+static char benchmark_class;
 /* common /my_debug/ */
 static int debug_vec[8];
 /* common /fap/ */

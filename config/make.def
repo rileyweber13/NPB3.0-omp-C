@@ -63,9 +63,9 @@
 #---------------------------------------------------------------------------
 # This is the C compiler used for OpenMP programs
 #---------------------------------------------------------------------------
-CC = gcc
+CC = g++
 # This links C programs; usually the same as ${CC}
-CLINK	= gcc
+CLINK	= g++
 
 #---------------------------------------------------------------------------
 # These macros are passed to the linker 

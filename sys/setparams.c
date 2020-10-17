@@ -52,22 +52,22 @@
 
 #define FILENAME "npbparams.h"
 #define DESC_LINE "/* CLASS = %c */\n"
-#define DEF_CLASS_LINE     "#define CLASS '%c'\n"
-#define FINDENT  "        "
+#define DEF_benchmark_class_LINE "#define BENCHMARK_CLASS '%c'\n"
+#define FINDENT "        "
 #define CONTINUE "     > "
 
-void get_info(char *argv[], int *typep, char *classp);
-void check_info(int type, char class);
-void read_info(int type, char *classp);
-void write_info(int type, char class);
-void write_sp_info(FILE *fp, char class);
-void write_bt_info(FILE *fp, char class);
-void write_lu_info(FILE *fp, char class);
-void write_mg_info(FILE *fp, char class);
-void write_cg_info(FILE *fp, char class);
-void write_ft_info(FILE *fp, char class);
-void write_ep_info(FILE *fp, char class);
-void write_is_info(FILE *fp, char class);
+void get_info(char *argv[], int *typep, char *benchmark_classp);
+void check_info(int type, char benchmark_class);
+void read_info(int type, char *benchmark_classp);
+void write_info(int type, char benchmark_class);
+void write_sp_info(FILE *fp, char benchmark_class);
+void write_bt_info(FILE *fp, char benchmark_class);
+void write_lu_info(FILE *fp, char benchmark_class);
+void write_mg_info(FILE *fp, char benchmark_class);
+void write_cg_info(FILE *fp, char benchmark_class);
+void write_ft_info(FILE *fp, char benchmark_class);
+void write_ep_info(FILE *fp, char benchmark_class);
+void write_is_info(FILE *fp, char benchmark_class);
 void write_compiler_info(int type, FILE *fp);
 void write_convertdouble_info(int type, FILE *fp);
 void check_line(char *line, char *label, char *val);
@@ -82,7 +82,7 @@ enum benchmark_types {SP, BT, LU, MG, FT, IS, EP, CG};
 main(int argc, char *argv[])
 {
   int type;
-  char class, class_old;
+  char benchmark_class, benchmark_class_old;
   
   if (argc != 3) {
     printf("Usage: %s benchmark-name class\n", argv[0]);
@@ -90,22 +90,22 @@ main(int argc, char *argv[])
   }
 
   /* Get command line arguments. Make sure they're ok. */
-  get_info(argv, &type, &class);
-  if (class != 'U') {
+  get_info(argv, &type, &benchmark_class);
+  if (benchmark_class != 'U') {
 #ifdef VERBOSE
     printf("setparams: For benchmark %s: class = %c\n", 
-	   argv[1], class); 
+	   argv[1], benchmark_class);
 #endif
-    check_info(type, class);
+    check_info(type, benchmark_class);
   }
 
   /* Get old information. */
-  read_info(type, &class_old);
-  if (class != 'U') {
-    if (class_old != 'X') {
+  read_info(type, &benchmark_class_old);
+  if (benchmark_class != 'U') {
+    if (benchmark_class_old != 'X') {
 #ifdef VERBOSE
       printf("setparams:     old settings: class = %c\n", 
-	     class_old); 
+	     benchmark_class_old);
 #endif
     }
   } else {
@@ -116,20 +116,20 @@ main(int argc, char *argv[])
   *       make {benchmark-name} CLASS=A                               *\n\
   *********************************************************************\n\n"); 
 
-    if (class_old != 'X') {
+    if (benchmark_class_old != 'X') {
 #ifdef VERBOSE
-      printf("setparams: Previous settings were CLASS=%c \n", class_old); 
+      printf("setparams: Previous settings were CLASS=%c \n", benchmark_class_old);
 #endif
     }
     exit(1); /* exit on class==U */
   }
 
   /* Write out new information if it's different. */
-  if (class != class_old) {
+  if (benchmark_class != benchmark_class_old) {
 #ifdef VERBOSE
     printf("setparams: Writing %s\n", FILENAME); 
 #endif
-    write_info(type, class);
+    write_info(type, benchmark_class);
   } else {
 #ifdef VERBOSE
     printf("setparams: Settings unchanged. %s unmodified\n", FILENAME); 
@@ -144,10 +144,10 @@ main(int argc, char *argv[])
  *  get_info(): Get parameters from command line 
  */
 
-void get_info(char *argv[], int *typep, char *classp) 
+void get_info(char *argv[], int *typep, char *benchmark_classp)
 {
 
-  *classp = *argv[2];
+  *benchmark_classp = *argv[2];
 
   if      (!strcmp(argv[1], "sp") || !strcmp(argv[1], "SP")) *typep = SP;
   else if (!strcmp(argv[1], "bt") || !strcmp(argv[1], "BT")) *typep = BT;
@@ -167,18 +167,18 @@ void get_info(char *argv[], int *typep, char *classp)
  *  check_info(): Make sure command line data is ok for this benchmark 
  */
 
-void check_info(int type, char class) 
+void check_info(int type, char benchmark_class)
 {
   int tmplog; 
 
   /* check class */
-  if (class != 'S' && 
-      class != 'A' && 
-      class != 'B' && 
-      class != 'R' && 
-      class != 'W' && 
-      class != 'C') {
-    printf("setparams: Unknown benchmark class %c\n", class); 
+  if (benchmark_class != 'S' &&
+      benchmark_class != 'A' &&
+      benchmark_class != 'B' &&
+      benchmark_class != 'R' &&
+      benchmark_class != 'W' &&
+      benchmark_class != 'C') {
+    printf("setparams: Unknown benchmark class %c\n", benchmark_class);
     printf("setparams: Allowed classes are \"S\", \"A\", \"B\" and \"C\"\n");
     exit(1);
   }
@@ -194,7 +194,7 @@ void check_info(int type, char class)
  *              format that we understand (since we wrote it). 
  */
 
-void read_info(int type, char *classp)
+void read_info(int type, char *benchmark_classp)
 {
   int nread, gotem = 0;
   char line[200];
@@ -217,14 +217,14 @@ void read_info(int type, char *classp)
       case LU:
       case EP:
       case CG:
-          nread = fscanf(fp, DESC_LINE, classp);
+          nread = fscanf(fp, DESC_LINE, benchmark_classp);
           if (nread != 1) {
             printf("setparams: Error parsing config file %s. Ignoring previous settings\n", FILENAME);
             goto abort;
           }
           break;
       case IS:
-          nread = fscanf(fp, DEF_CLASS_LINE, classp);
+          nread = fscanf(fp, DEF_benchmark_class_LINE, benchmark_classp);
           if (nread != 1) {
             printf("setparams: Error parsing config file %s. Ignoring previous settings\n", FILENAME);
             goto abort;
@@ -237,14 +237,14 @@ void read_info(int type, char *classp)
   }
 
  normal_return:
-  *classp = *classp;
+  *benchmark_classp = *benchmark_classp;
   fclose(fp);
 
 
   return;
 
  abort:
-  *classp = 'X';
+  *benchmark_classp = 'X';
   return;
 }
 
@@ -256,7 +256,7 @@ void read_info(int type, char *classp)
  *               specific to a particular benchmark. 
  */
 
-void write_info(int type, char class) 
+void write_info(int type, char benchmark_class)
 {
   FILE *fp;
   fp = fopen(FILENAME, "w");
@@ -274,7 +274,7 @@ void write_info(int type, char class)
       case EP:
       case CG:
           /* Write out the header */
-          fprintf(fp, DESC_LINE, class);
+          fprintf(fp, DESC_LINE, benchmark_class);
           /* Print out a warning so bozos don't mess with the file */
           fprintf(fp, "\
 /*\n\
@@ -285,7 +285,7 @@ c  in this directory. Do not modify it by hand.\n\
 
           break;
       case IS:
-          fprintf(fp, DEF_CLASS_LINE, class);
+          fprintf(fp, DEF_benchmark_class_LINE, benchmark_class);
           fprintf(fp, "\
 /*\n\
    This file is generated automatically by the setparams utility.\n\
@@ -302,28 +302,28 @@ c  in this directory. Do not modify it by hand.\n\
   /* Now do benchmark-specific stuff */
   switch(type) {
   case SP:
-    write_sp_info(fp, class);
+    write_sp_info(fp, benchmark_class);
     break;	      
   case BT:	      
-    write_bt_info(fp, class);
+    write_bt_info(fp, benchmark_class);
     break;	      
   case LU:	      
-    write_lu_info(fp, class);
+    write_lu_info(fp, benchmark_class);
     break;	      
   case MG:	      
-    write_mg_info(fp, class);
+    write_mg_info(fp, benchmark_class);
     break;	      
   case IS:	      
-    write_is_info(fp, class);  
+    write_is_info(fp, benchmark_class);
     break;	      
   case FT:	      
-    write_ft_info(fp, class);
+    write_ft_info(fp, benchmark_class);
     break;	      
   case EP:	      
-    write_ep_info(fp, class);
+    write_ep_info(fp, benchmark_class);
     break;	      
   case CG:	      
-    write_cg_info(fp, class);
+    write_cg_info(fp, benchmark_class);
     break;
   default:
     printf("setparams: (Internal error): Unknown benchmark type %d\n", type);
@@ -340,17 +340,17 @@ c  in this directory. Do not modify it by hand.\n\
  * write_sp_info(): Write SP specific info to config file
  */
 
-void write_sp_info(FILE *fp, char class) 
+void write_sp_info(FILE *fp, char benchmark_class)
 {
   int problem_size, niter;
   char *dt;
-  if      (class == 'S') { problem_size = 12;  dt = "0.015";   niter = 100; }
-  else if (class == 'W') { problem_size = 36;  dt = "0.0015";  niter = 400; }
-  else if (class == 'A') { problem_size = 64;  dt = "0.0015";  niter = 400; }
-  else if (class == 'B') { problem_size = 102; dt = "0.001";   niter = 400; }
-  else if (class == 'C') { problem_size = 162; dt = "0.00067"; niter = 400; }
+  if      (benchmark_class == 'S') { problem_size = 12;  dt = "0.015";   niter = 100; }
+  else if (benchmark_class == 'W') { problem_size = 36;  dt = "0.0015";  niter = 400; }
+  else if (benchmark_class == 'A') { problem_size = 64;  dt = "0.0015";  niter = 400; }
+  else if (benchmark_class == 'B') { problem_size = 102; dt = "0.001";   niter = 400; }
+  else if (benchmark_class == 'C') { problem_size = 162; dt = "0.00067"; niter = 400; }
   else {
-    printf("setparams: Internal error: invalid class %c\n", class);
+    printf("setparams: Internal error: invalid class %c\n", benchmark_class);
     exit(1);
   }
   fprintf(fp, "#define\tPROBLEM_SIZE\t%d\n", problem_size);
@@ -362,17 +362,17 @@ void write_sp_info(FILE *fp, char class)
  * write_bt_info(): Write BT specific info to config file
  */
 
-void write_bt_info(FILE *fp, char class) 
+void write_bt_info(FILE *fp, char benchmark_class)
 {
   int problem_size, niter;
   char *dt;
-  if      (class == 'S') { problem_size = 12;  dt = "0.010";   niter = 60; }
-  else if (class == 'W') { problem_size = 24;  dt = "0.0008";  niter = 200; }
-  else if (class == 'A') { problem_size = 64;  dt = "0.0008";  niter = 200; }
-  else if (class == 'B') { problem_size = 102; dt = "0.0003";  niter = 200; }
-  else if (class == 'C') { problem_size = 162; dt = "0.0001";  niter = 200; }
+  if      (benchmark_class == 'S') { problem_size = 12;  dt = "0.010";   niter = 60; }
+  else if (benchmark_class == 'W') { problem_size = 24;  dt = "0.0008";  niter = 200; }
+  else if (benchmark_class == 'A') { problem_size = 64;  dt = "0.0008";  niter = 200; }
+  else if (benchmark_class == 'B') { problem_size = 102; dt = "0.0003";  niter = 200; }
+  else if (benchmark_class == 'C') { problem_size = 162; dt = "0.0001";  niter = 200; }
   else {
-    printf("setparams: Internal error: invalid class %c\n", class);
+    printf("setparams: Internal error: invalid class %c\n", benchmark_class);
     exit(1);
   }
   fprintf(fp, "#define\tPROBLEM_SIZE\t%d\n", problem_size);
@@ -386,19 +386,19 @@ void write_bt_info(FILE *fp, char class)
  * write_lu_info(): Write SP specific info to config file
  */
 
-void write_lu_info(FILE *fp, char class) 
+void write_lu_info(FILE *fp, char benchmark_class)
 {
   int isiz1, isiz2, itmax, inorm, problem_size;
   int xdiv, ydiv; /* number of cells in x and y direction */
   char *dt_default;
 
-  if      (class == 'S') { problem_size = 12;  dt_default = "0.5"; itmax = 50; }
-  else if (class == 'W') { problem_size = 33;  dt_default = "1.5e-3"; itmax = 300; }
-  else if (class == 'A') { problem_size = 64;  dt_default = "2.0"; itmax = 250; }
-  else if (class == 'B') { problem_size = 102; dt_default = "2.0"; itmax = 250; }
-  else if (class == 'C') { problem_size = 162; dt_default = "2.0"; itmax = 250; }
+  if      (benchmark_class == 'S') { problem_size = 12;  dt_default = "0.5"; itmax = 50; }
+  else if (benchmark_class == 'W') { problem_size = 33;  dt_default = "1.5e-3"; itmax = 300; }
+  else if (benchmark_class == 'A') { problem_size = 64;  dt_default = "2.0"; itmax = 250; }
+  else if (benchmark_class == 'B') { problem_size = 102; dt_default = "2.0"; itmax = 250; }
+  else if (benchmark_class == 'C') { problem_size = 162; dt_default = "2.0"; itmax = 250; }
   else {
-    printf("setparams: Internal error: invalid class %c\n", class);
+    printf("setparams: Internal error: invalid class %c\n", benchmark_class);
     exit(1);
   }
   inorm = itmax;
@@ -421,17 +421,17 @@ void write_lu_info(FILE *fp, char class)
  * write_mg_info(): Write MG specific info to config file
  */
 
-void write_mg_info(FILE *fp, char class) 
+void write_mg_info(FILE *fp, char benchmark_class)
 {
   int problem_size, nit, log2_size, lt_default, lm;
   int ndim1, ndim2, ndim3;
-  if      (class == 'S') { problem_size = 32; nit = 4; }
-  else if (class == 'W') { problem_size = 64; nit = 40; }
-  else if (class == 'A') { problem_size = 256; nit = 4; }
-  else if (class == 'B') { problem_size = 256; nit = 20; }
-  else if (class == 'C') { problem_size = 512; nit = 20; }
+  if      (benchmark_class == 'S') { problem_size = 32; nit = 4; }
+  else if (benchmark_class == 'W') { problem_size = 64; nit = 40; }
+  else if (benchmark_class == 'A') { problem_size = 256; nit = 4; }
+  else if (benchmark_class == 'B') { problem_size = 256; nit = 20; }
+  else if (benchmark_class == 'C') { problem_size = 512; nit = 20; }
   else {
-    printf("setparams: Internal error: invalid class type %c\n", class);
+    printf("setparams: Internal error: invalid class type %c\n", benchmark_class);
     exit(1);
   }
   log2_size = ilog2(problem_size);
@@ -460,16 +460,16 @@ void write_mg_info(FILE *fp, char class)
  * write_is_info(): Write IS specific info to config file
  */
 
-void write_is_info(FILE *fp, char class) 
+void write_is_info(FILE *fp, char benchmark_class)
 {
   int m1, m2, m3 ;
-  if( class != 'S' &&
-      class != 'W' &&
-      class != 'A' &&
-      class != 'B' &&
-      class != 'C')
+  if( benchmark_class != 'S' &&
+      benchmark_class != 'W' &&
+      benchmark_class != 'A' &&
+      benchmark_class != 'B' &&
+      benchmark_class != 'C')
   {
-    printf("setparams: Internal error: invalid class type %c\n", class);
+    printf("setparams: Internal error: invalid class type %c\n", benchmark_class);
     exit(1);
   }
 }
@@ -479,7 +479,7 @@ void write_is_info(FILE *fp, char class)
  * write_cg_info(): Write CG specific info to config file
  */
 
-void write_cg_info(FILE *fp, char class) 
+void write_cg_info(FILE *fp, char benchmark_class)
 {
   int na,nonzer,niter;
   char *shift,*rcond="1.0e-1";
@@ -490,19 +490,19 @@ void write_cg_info(FILE *fp, char class)
        *shiftC="110.0";
 
 
-  if( class == 'S' )
+  if( benchmark_class == 'S' )
   { na=1400; nonzer=7; niter=15; shift=shiftS; }
-  else if( class == 'W' )
+  else if( benchmark_class == 'W' )
   { na=7000; nonzer=8; niter=15; shift=shiftW; }
-  else if( class == 'A' )
+  else if( benchmark_class == 'A' )
   { na=14000; nonzer=11; niter=15; shift=shiftA; }
-  else if( class == 'B' )
+  else if( benchmark_class == 'B' )
   { na=75000; nonzer=13; niter=75; shift=shiftB; }
-  else if( class == 'C' )
+  else if( benchmark_class == 'C' )
   { na=150000; nonzer=15; niter=75; shift=shiftC; }
   else
   {
-    printf("setparams: Internal error: invalid class type %c\n", class);
+    printf("setparams: Internal error: invalid class type %c\n", benchmark_class);
     exit(1);
   }
   fprintf( fp, "#define\tNA\t%d\n", na);
@@ -517,20 +517,20 @@ void write_cg_info(FILE *fp, char class)
  * write_ft_info(): Write FT specific info to config file
  */
 
-void write_ft_info(FILE *fp, char class) 
+void write_ft_info(FILE *fp, char benchmark_class)
 {
   /* easiest way (given the way the benchmark is written)
    * is to specify log of number of grid points in each
    * direction m1, m2, m3. nt is the number of iterations
    */
   int nx, ny, nz, maxdim, niter, np_min;
-  if      (class == 'S') { nx = 64; ny = 64; nz = 64; niter = 6;}
-  else if (class == 'W') { nx = 128; ny = 128; nz = 32; niter = 6;}
-  else if (class == 'A') { nx = 256; ny = 256; nz = 128; niter = 6;}
-  else if (class == 'B') { nx = 512; ny = 256; nz = 256; niter =20;}
-  else if (class == 'C') { nx = 512; ny = 512; nz = 512; niter =20;}
+  if      (benchmark_class == 'S') { nx = 64; ny = 64; nz = 64; niter = 6;}
+  else if (benchmark_class == 'W') { nx = 128; ny = 128; nz = 32; niter = 6;}
+  else if (benchmark_class == 'A') { nx = 256; ny = 256; nz = 128; niter = 6;}
+  else if (benchmark_class == 'B') { nx = 512; ny = 256; nz = 256; niter =20;}
+  else if (benchmark_class == 'C') { nx = 512; ny = 512; nz = 512; niter =20;}
   else {
-    printf("setparams: Internal error: invalid class type %c\n", class);
+    printf("setparams: Internal error: invalid class type %c\n", benchmark_class);
     exit(1);
   }
   maxdim = nx;
@@ -548,25 +548,25 @@ void write_ft_info(FILE *fp, char class)
  * write_ep_info(): Write EP specific info to config file
  */
 
-void write_ep_info(FILE *fp, char class)
+void write_ep_info(FILE *fp, char benchmark_class)
 {
   /* easiest way (given the way the benchmark is written)
    * is to specify log of number of grid points in each
    * direction m1, m2, m3. nt is the number of iterations
    */
   int m;
-  if      (class == 'S') { m = 24; }
-  else if (class == 'W') { m = 25; }
-  else if (class == 'A') { m = 28; }
-  else if (class == 'B') { m = 30; }
-  else if (class == 'C') { m = 32; }
+  if      (benchmark_class == 'S') { m = 24; }
+  else if (benchmark_class == 'W') { m = 25; }
+  else if (benchmark_class == 'A') { m = 28; }
+  else if (benchmark_class == 'B') { m = 30; }
+  else if (benchmark_class == 'C') { m = 32; }
   else {
-    printf("setparams: Internal error: invalid class type %c\n", class);
+    printf("setparams: Internal error: invalid class type %c\n", benchmark_class);
     exit(1);
   }
 
-  fprintf(fp, "#define\tCLASS\t \'%c\'\n", class);
-  fprintf(fp, "#define\tM\t%d\n", m);
+  fprintf(fp, DEF_benchmark_class_LINE, benchmark_class);
+  fprintf(fp, "\n#define\tM\t%d\n", m);
 }
 
 

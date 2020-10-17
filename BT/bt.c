@@ -29,10 +29,18 @@
   OpenMP C version: S. Satoh
 
   3.0 structure translation: M. Popov
+
+  FHV_PERFMON addition: R. Weber
   
 --------------------------------------------------------------------*/
 
 #include "npb-C.h"
+
+/* FHV includes, if desired */
+#ifdef FHV_PERFMON
+#include <fhv_perfmon.hpp>
+#include <likwid.h>
+#endif
 
 /* global variables */
 #include "header.h"
@@ -52,7 +60,7 @@ static void lhsy(void);
 static void lhsz(void);
 static void compute_rhs(void);
 static void set_constants(void);
-static void verify(int no_time_steps, char *class, boolean *verified);
+static void verify(int no_time_steps, char *benchmark_class, boolean *verified);
 static void x_solve(void);
 static void x_backsubstitute(void);
 static void x_solve_cell(void);
@@ -79,7 +87,7 @@ int main(int argc, char **argv) {
 
   double tmax;
   boolean verified;
-  char class;
+  char benchmark_class;
   FILE *fp;
 
 /*--------------------------------------------------------------------
@@ -136,15 +144,28 @@ c-------------------------------------------------------------------*/
   
   initialize();
 
+#ifdef FHV_PERFMON
+  // this cannot be called inside `initialize();` because it must be called
+  // exactly once
+  fhv_perfmon::init();
+#endif
+
   timer_clear(1);
   timer_start(1);
-   
+
   for (step = 1; step <= niter; step++) {
 
     if (step%20 == 0 || step == 1) {
       printf(" Time step %4d\n", step);
     }
+
+#ifdef FHV_PERFMON
+    fhv_perfmon::startRegion("adi_all_computation");
+#endif
     adi();
+#ifdef FHV_PERFMON
+    fhv_perfmon::stopRegion("adi_all_computation");
+#endif
   }
   
 #pragma omp parallel
@@ -158,7 +179,7 @@ c-------------------------------------------------------------------*/
   timer_stop(1);
   tmax = timer_read(1);
        
-  verify(niter, &class, &verified);
+  verify(niter, &benchmark_class, &verified);
 
   n3 = grid_points[0]*grid_points[1]*grid_points[2];
   navg = (grid_points[0]+grid_points[1]+grid_points[2])/3.0;
@@ -168,7 +189,7 @@ c-------------------------------------------------------------------*/
   } else {
     mflops = 0.0;
   }
-  c_print_results("BT", class, grid_points[0], 
+  c_print_results("BT", benchmark_class, grid_points[0],
 		  grid_points[1], grid_points[2], niter, nthreads,
 		  tmax, mflops, "          floating point", 
 		  verified, NPBVERSION,COMPILETIME, CS1, CS2, CS3, CS4, CS5, 
@@ -2393,7 +2414,7 @@ static void set_constants(void) {
 /*--------------------------------------------------------------------
 --------------------------------------------------------------------*/
 
-static void verify(int no_time_steps, char *class, boolean *verified) {
+static void verify(int no_time_steps, char *benchmark_class, boolean *verified) {
 
 /*--------------------------------------------------------------------
 --------------------------------------------------------------------*/
@@ -2424,7 +2445,7 @@ c-------------------------------------------------------------------*/
     xcr[m] = xcr[m] / dt;
   }
 
-  *class = 'U';
+  *benchmark_class = 'U';
   *verified = TRUE;
 
   for (m = 0; m < 5; m++) {
@@ -2440,7 +2461,7 @@ c-------------------------------------------------------------------*/
       grid_points[2] == 12 &&
       no_time_steps == 60) {
 
-    *class = 'S';
+    *benchmark_class = 'S';
     dtref = 1.0e-2;
 
 /*--------------------------------------------------------------------
@@ -2469,7 +2490,7 @@ c-------------------------------------------------------------------*/
 	       grid_points[2] == 24 &&
 	       no_time_steps == 200) {
 
-      *class = 'W';
+      *benchmark_class = 'W';
       dtref = 0.8e-3;
 /*--------------------------------------------------------------------
 c  Reference values of RMS-norms of residual.
@@ -2498,7 +2519,7 @@ c-------------------------------------------------------------------*/
 	       grid_points[2] == 64 &&
 	       no_time_steps == 200) {
 
-      *class = 'A';
+      *benchmark_class = 'A';
       dtref = 0.8e-3;
 /*--------------------------------------------------------------------
 c  Reference values of RMS-norms of residual.
@@ -2527,7 +2548,7 @@ c-------------------------------------------------------------------*/
 	       grid_points[2] == 102 &&
 	       no_time_steps == 200) {
 
-      *class = 'B';
+      *benchmark_class = 'B';
       dtref = 3.0e-4;
 
 /*--------------------------------------------------------------------
@@ -2557,7 +2578,7 @@ c-------------------------------------------------------------------*/
 	       grid_points[2] == 162 &&
 	       no_time_steps == 200) {
 
-      *class = 'C';
+      *benchmark_class = 'C';
       dtref = 1.0e-4;
 
 /*--------------------------------------------------------------------
@@ -2601,25 +2622,25 @@ c-------------------------------------------------------------------*/
 c    Output the comparison of computed results to known cases.
 c-------------------------------------------------------------------*/
 
-  if (*class != 'U') {
-    printf(" Verification being performed for class %1c\n", *class);
+  if (*benchmark_class != 'U') {
+    printf(" Verification being performed for class %1c\n", *benchmark_class);
     printf(" accuracy setting for epsilon = %20.13e\n", epsilon);
     if (fabs(dt-dtref) > epsilon) {
       *verified = FALSE;
-      *class = 'U';
+      *benchmark_class = 'U';
       printf(" DT does not match the reference value of %15.8e\n", dtref);
     }
   } else {
     printf(" Unknown class\n");
   }
 
-  if (*class != 'U') {
+  if (*benchmark_class != 'U') {
     printf(" Comparison of RMS-norms of residual\n");
   } else {
     printf(" RMS-norms of residual\n");
   }
   for (m = 0; m < 5; m++) {
-    if (*class == 'U') {
+    if (*benchmark_class == 'U') {
       printf("          %2d%20.13e\n", m, xcr[m]);
     } else if (xcrdif[m] > epsilon) {
       *verified = FALSE;
@@ -2631,14 +2652,14 @@ c-------------------------------------------------------------------*/
     }
   }
 
-  if (*class != 'U') {
+  if (*benchmark_class != 'U') {
     printf(" Comparison of RMS-norms of solution error\n");
   } else {
     printf(" RMS-norms of solution error\n");
   }
         
   for (m = 0; m < 5; m++) {
-    if (*class == 'U') {
+    if (*benchmark_class == 'U') {
       printf("          %2d%20.13e\n", m, xce[m]);
     } else if (xcedif[m] > epsilon) {
       *verified = FALSE;
@@ -2650,7 +2671,7 @@ c-------------------------------------------------------------------*/
     }
   }
 
-  if (*class == 'U') {
+  if (*benchmark_class == 'U') {
     printf(" No reference values provided\n");
     printf(" No verification performed\n");
   } else if (*verified == TRUE) {

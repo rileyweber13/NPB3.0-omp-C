@@ -111,7 +111,7 @@ int main(int argc, char **argv) {
     double norm_temp11;
     double norm_temp12;
     double t, mflops;
-    char class;
+    char benchmark_class;
     boolean verified;
     double zeta_verify_value, epsilon;
 
@@ -121,22 +121,22 @@ int main(int argc, char **argv) {
     lastcol  = NA;
 
     if (NA == 1400 && NONZER == 7 && NITER == 15 && SHIFT == 10.0) {
-	class = 'S';
+	benchmark_class = 'S';
 	zeta_verify_value = 8.5971775078648;
     } else if (NA == 7000 && NONZER == 8 && NITER == 15 && SHIFT == 12.0) {
-	class = 'W';
+	benchmark_class = 'W';
 	zeta_verify_value = 10.362595087124;
     } else if (NA == 14000 && NONZER == 11 && NITER == 15 && SHIFT == 20.0) {
-	class = 'A';
+	benchmark_class = 'A';
 	zeta_verify_value = 17.130235054029;
     } else if (NA == 75000 && NONZER == 13 && NITER == 75 && SHIFT == 60.0) {
-	class = 'B';
+	benchmark_class = 'B';
 	zeta_verify_value = 22.712745482631;
     } else if (NA == 150000 && NONZER == 15 && NITER == 75 && SHIFT == 110.0) {
-	class = 'C';
+	benchmark_class = 'C';
 	zeta_verify_value = 28.973605592845;
     } else {
-	class = 'U';
+	benchmark_class = 'U';
     }
 
     printf("\n\n NAS Parallel Benchmarks 3.0 structured OpenMP C version"
@@ -310,7 +310,7 @@ c-------------------------------------------------------------------*/
     printf(" Benchmark completed\n");
 
     epsilon = 1.0e-10;
-    if (class != 'U') {
+    if (benchmark_class != 'U') {
 	if (fabs(zeta - zeta_verify_value) <= epsilon) {
             verified = TRUE;
 	    printf(" VERIFICATION SUCCESSFUL\n");
@@ -336,7 +336,7 @@ c-------------------------------------------------------------------*/
 	mflops = 0.0;
     }
 
-    c_print_results("CG", class, NA, 0, 0, NITER, nthreads, t, 
+    c_print_results("CG", benchmark_class, NA, 0, 0, NITER, nthreads, t,
 		    mflops, "          floating point", 
 		    verified, NPBVERSION, COMPILETIME,
 		    CS1, CS2, CS3, CS4, CS5, CS6, CS7);

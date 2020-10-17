@@ -30,6 +30,7 @@
   
 --------------------------------------------------------------------*/
 
+#include "npb-C.h"
 #include "npbparams.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -55,15 +56,15 @@
 /******************/
 /* default values */
 /******************/
-#ifndef CLASS
-#define CLASS 'S'
+#ifndef benchmark_class
+#define benchmark_class 'S'
 #endif
 
 
 /*************/
 /*  CLASS S  */
 /*************/
-#if CLASS == 'S'
+#if benchmark_class == 'S'
 #define  TOTAL_KEYS_LOG_2    16
 #define  MAX_KEY_LOG_2       11
 #define  NUM_BUCKETS_LOG_2   9
@@ -73,7 +74,7 @@
 /*************/
 /*  CLASS W  */
 /*************/
-#if CLASS == 'W'
+#if benchmark_class == 'W'
 #define  TOTAL_KEYS_LOG_2    20
 #define  MAX_KEY_LOG_2       16
 #define  NUM_BUCKETS_LOG_2   10
@@ -82,7 +83,7 @@
 /*************/
 /*  CLASS A  */
 /*************/
-#if CLASS == 'A'
+#if benchmark_class == 'A'
 #define  TOTAL_KEYS_LOG_2    23
 #define  MAX_KEY_LOG_2       19
 #define  NUM_BUCKETS_LOG_2   10
@@ -92,7 +93,7 @@
 /*************/
 /*  CLASS B  */
 /*************/
-#if CLASS == 'B'
+#if benchmark_class == 'B'
 #define  TOTAL_KEYS_LOG_2    25
 #define  MAX_KEY_LOG_2       21
 #define  NUM_BUCKETS_LOG_2   10
@@ -102,7 +103,7 @@
 /*************/
 /*  CLASS C  */
 /*************/
-#if CLASS == 'C'
+#if benchmark_class == 'C'
 #define  TOTAL_KEYS_LOG_2    27
 #define  MAX_KEY_LOG_2       23
 #define  NUM_BUCKETS_LOG_2   10
@@ -231,9 +232,7 @@ void full_verify( void );
 /*************    portable random number generator    ************/
 /*****************************************************************/
 
-double	randlc(X, A)
-double *X;
-double *A;
+double	randlc(double *X, double *A)
 {
       static int        KS=0;
       static double	R23, R46, T23, T46;
@@ -434,7 +433,7 @@ void rank( int iteration )
     {                                             
         k = partial_verify_vals[i];          /* test vals were put here */
         if( 0 <= k  &&  k <= NUM_KEYS-1 )
-            switch( CLASS )
+            switch( benchmark_class )
             {
                 case 'S':
                     if( i <= 2 )
@@ -580,9 +579,7 @@ void rank( int iteration )
 /*************             M  A  I  N             ****************/
 /*****************************************************************/
 
-main( argc, argv )
-    int argc;
-    char **argv;
+main(int argc, char **argv)
 {
 
     int             i, iteration, itemp;
@@ -593,7 +590,7 @@ main( argc, argv )
 
 /*  Initialize the verification arrays if a valid class */
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
-        switch( CLASS )
+        switch( benchmark_class )
         {
             case 'S':
                 test_index_array[i] = S_test_index_array[i];
@@ -622,7 +619,7 @@ main( argc, argv )
 /*  Printout initial NPB info */
     printf( "\n\n NAS Parallel Benchmarks 2.3 OpenMP C version"
 	    " - IS Benchmark\n\n" );
-    printf( " Size:  %d  (class %c)\n", TOTAL_KEYS, CLASS );
+    printf( " Size:  %d  (class %c)\n", TOTAL_KEYS, benchmark_class );
     printf( " Iterations:   %d\n", MAX_ITERATIONS );
 
 /*  Initialize timer  */             
@@ -641,7 +638,7 @@ main( argc, argv )
 /*  Start verification counter */
     passed_verification = 0;
 
-    if( CLASS != 'S' ) printf( "\n   iteration\n" );
+    if( benchmark_class != 'S' ) printf( "\n   iteration\n" );
 
 /*  Start timer  */             
     timer_start( 0 );
@@ -653,7 +650,7 @@ main( argc, argv )
     for( iteration=1; iteration<=MAX_ITERATIONS; iteration++ )
     {
 #pragma omp master	
-        if( CLASS != 'S' ) printf( "        %d\n", iteration );
+        if( benchmark_class != 'S' ) printf( "        %d\n", iteration );
 	
         rank( iteration );
 	
@@ -678,7 +675,7 @@ main( argc, argv )
     if( passed_verification != 5*MAX_ITERATIONS + 1 )
         passed_verification = 0;
     c_print_results( "IS",
-                     CLASS,
+                     benchmark_class,
                      TOTAL_KEYS,
                      0,
                      0,

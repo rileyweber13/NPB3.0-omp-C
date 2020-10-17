@@ -66,7 +66,7 @@ static void fftz2 (int is, int l, int m, int n, int ny, int ny1,
 static int ilog2(int n);
 static void checksum(int i, dcomplex u1[NZ][NY][NX], int d[3]);
 static void verify (int d1, int d2, int d3, int nt,
-		    boolean *verified, char *class);
+		    boolean *verified, char *benchmark_class);
 
 /*--------------------------------------------------------------------
 c FT benchmark
@@ -109,7 +109,7 @@ c-------------------------------------------------------------------*/
     int nthreads = 1;
     double total_time, mflops;
     boolean verified;
-    char class;
+    char benchmark_class;
 
 /*--------------------------------------------------------------------
 c Run the entire problem once to make sure all data is touched. 
@@ -190,7 +190,7 @@ c-------------------------------------------------------------------*/
         
     }
 
-    verify(NX, NY, NZ, niter, &verified, &class);
+    verify(NX, NY, NZ, niter, &verified, &benchmark_class);
 
 #pragma omp parallel 
   {
@@ -212,7 +212,7 @@ c-------------------------------------------------------------------*/
     } else {
 	mflops = 0.0;
     }
-    c_print_results("FT", class, NX, NY, NZ, niter, nthreads,
+    c_print_results("FT", benchmark_class, NX, NY, NZ, niter, nthreads,
 		    total_time, mflops, "          floating point", verified, 
 		    NPBVERSION, COMPILETIME,
 		    CS1, CS2, CS3, CS4, CS5, CS6, CS7);
@@ -896,7 +896,7 @@ c-------------------------------------------------------------------*/
 c-------------------------------------------------------------------*/
 
 static void verify (int d1, int d2, int d3, int nt,
-		    boolean *verified, char *class) {
+		    boolean *verified, char *benchmark_class) {
 
 /*--------------------------------------------------------------------
 c-------------------------------------------------------------------*/
@@ -1052,13 +1052,13 @@ c-------------------------------------------------------------------*/
 
     epsilon = 1.0e-12;
     *verified = TRUE;
-    *class = 'U';
+    *benchmark_class = 'U';
 
     if (d1 == 64 &&
 	d2 == 64 &&
 	d3 == 64 &&
 	nt == 6) {
-	*class = 'S';
+	*benchmark_class = 'S';
 	for (i = 1; i <= nt; i++) {
             err = (get_real(sums[i]) - vdata_real_s[i]) / vdata_real_s[i];
             if (fabs(err) > epsilon) {
@@ -1075,7 +1075,7 @@ c-------------------------------------------------------------------*/
 	       d2 == 128 &&
 	       d3 == 32 &&
 	       nt == 6) {
-	*class = 'W';
+	*benchmark_class = 'W';
 	for (i = 1; i <= nt; i++) {
             err = (get_real(sums[i]) - vdata_real_w[i]) / vdata_real_w[i];
             if (fabs(err) > epsilon) {
@@ -1092,7 +1092,7 @@ c-------------------------------------------------------------------*/
 	       d2 == 256 &&
 	       d3 == 128 &&
 	       nt == 6) {
-	*class = 'A';
+	*benchmark_class = 'A';
 	for (i = 1; i <= nt; i++) {
             err = (get_real(sums[i]) - vdata_real_a[i]) / vdata_real_a[i];
             if (fabs(err) > epsilon) {
@@ -1109,7 +1109,7 @@ c-------------------------------------------------------------------*/
 	       d2 == 256 &&
 	       d3 == 256 &&
 	       nt == 20) {
-	*class = 'B';
+	*benchmark_class = 'B';
 	for (i = 1; i <= nt; i++) {
             err = (get_real(sums[i]) - vdata_real_b[i]) / vdata_real_b[i];
             if (fabs(err) > epsilon) {
@@ -1126,7 +1126,7 @@ c-------------------------------------------------------------------*/
 	       d2 == 512 &&
 	       d3 == 512 &&
 	       nt == 20) {
-	*class = 'C';
+	*benchmark_class = 'C';
 	for (i = 1; i <= nt; i++) {
             err = (get_real(sums[i]) - vdata_real_c[i]) / vdata_real_c[i];
             if (fabs(err) > epsilon) {
@@ -1141,11 +1141,11 @@ c-------------------------------------------------------------------*/
 	}
     }
     
-    if (*class != 'U') {
+    if (*benchmark_class != 'U') {
 	printf("Result verification successful\n");
     } else {
 	printf("Result verification failed\n");
     }
-    printf("class = %1c\n", *class);
+    printf("class = %1c\n", *benchmark_class);
 }
 

@@ -82,7 +82,7 @@ static void setcoeff(void);
 static void setiv(void);
 static void ssor(void);
 static void verify(double xcr[5], double xce[5], double xci,
-		   char *class, boolean *verified);
+		   char *benchmark_class, boolean *verified);
 
 /*--------------------------------------------------------------------
       program applu
@@ -97,7 +97,7 @@ c   five coupled parabolic/elliptic partial differential equations.
 c
 --------------------------------------------------------------------*/
 
-  char class;
+  char benchmark_class;
   boolean verified;
   double mflops;
   int nthreads = 1;
@@ -159,7 +159,7 @@ c   compute the surface integral
 /*--------------------------------------------------------------------
 c   verification test
 --------------------------------------------------------------------*/
-  verify ( rsdnm, errnm, frc, &class, &verified );
+  verify ( rsdnm, errnm, frc, &benchmark_class, &verified );
   mflops = (double)itmax*(1984.77*(double)nx0
 			 *(double)ny0
 			 *(double)nz0
@@ -168,7 +168,7 @@ c   verification test
 			 -144010.0)
     / (maxtime*1000000.0);
 
-  c_print_results("LU", class, nx0,
+  c_print_results("LU", benchmark_class, nx0,
 		  ny0, nz0, itmax, nthreads,
 		  maxtime, mflops, "          floating point", verified, 
 		  NPBVERSION, COMPILETIME, CS1, CS2, CS3, CS4, CS5, CS6, 
@@ -3225,7 +3225,7 @@ c   check the newton-iteration residuals against the tolerance levels
 --------------------------------------------------------------------*/
 
 static void verify(double xcr[5], double xce[5], double xci,
-		   char *class, boolean *verified) {
+		   char *benchmark_class, boolean *verified) {
 
 /*--------------------------------------------------------------------
 c  verification routine                         
@@ -3241,7 +3241,7 @@ c   tolerance level
 --------------------------------------------------------------------*/
   epsilon = 1.0e-08;
 
-  *class = 'U';
+  *benchmark_class = 'U';
   *verified = TRUE;
 
   for (m = 0; m < 5; m++) {
@@ -3251,7 +3251,7 @@ c   tolerance level
   xciref = 1.0;
 
   if ( nx0 == 12 && ny0 == 12 && nz0 == 12 && itmax == 50)  {
-    *class = 'S';
+    *benchmark_class = 'S';
     dtref = 5.0e-1;
 
 /*--------------------------------------------------------------------
@@ -3282,7 +3282,7 @@ c   after 50 time steps, with DT = 5.0d-01
 
   } else if ( nx0 == 33 && ny0 == 33 && nz0 == 33 && itmax == 300) {
 
-    *class = 'W';   /* SPEC95fp size */
+    *benchmark_class = 'W';   /* SPEC95fp size */
     dtref = 1.5e-3;
 /*--------------------------------------------------------------------
 c   Reference values of RMS-norms of residual, for the (33x33x33) grid,
@@ -3311,7 +3311,7 @@ c   after 300 time steps, with  DT = 1.5d-3
 
   } else if ( nx0 == 64 && ny0 == 64 && nz0 == 64 && itmax == 250) {
 
-    *class = 'A';
+    *benchmark_class = 'A';
     dtref = 2.0e+0;
 /*--------------------------------------------------------------------
 c   Reference values of RMS-norms of residual, for the (64X64X64) grid,
@@ -3341,7 +3341,7 @@ c   after 250 time steps, with DT = 2.0d+0.0
 
     } else if ( nx0 == 102 && ny0 == 102 && nz0 == 102 && itmax == 250) {
 
-      *class = 'B';
+      *benchmark_class = 'B';
       dtref = 2.0e+0;
 
 /*--------------------------------------------------------------------
@@ -3372,7 +3372,7 @@ c   after 250 time steps, with DT = 2.0d+0.0
 
       } else if ( nx0 == 162 && ny0 == 162 && nz0 == 162 && itmax == 250) {
 
-	*class = 'C';
+	*benchmark_class = 'C';
 	dtref = 2.0e+0;
 
 /*--------------------------------------------------------------------
@@ -3424,26 +3424,26 @@ c    Compute the difference of solution values and the known reference values.
 c    Output the comparison of computed results to known cases.
 --------------------------------------------------------------------*/
 
-  if (*class != 'U') {
-    printf("\n Verification being performed for class %1c\n", *class);
+  if (*benchmark_class != 'U') {
+    printf("\n Verification being performed for class %1c\n", *benchmark_class);
     printf(" Accuracy setting for epsilon = %20.13e\n", epsilon);
     if (fabs(dt-dtref) > epsilon) {  
       *verified = FALSE;
-      *class = 'U';
+      *benchmark_class = 'U';
       printf(" DT does not match the reference value of %15.8e\n", dtref);
     }
   } else {
     printf(" Unknown class\n");
   }
 
-  if (*class != 'U') {
+  if (*benchmark_class != 'U') {
     printf(" Comparison of RMS-norms of residual\n");
   } else {
     printf(" RMS-norms of residual\n");
   }
 
   for (m = 0; m < 5; m++) {
-    if (*class  ==  'U') {
+    if (*benchmark_class  ==  'U') {
       printf("          %2d  %20.13e\n", m, xcr[m]);
     } else if (xcrdif[m] > epsilon) {
       *verified = FALSE;
@@ -3455,14 +3455,14 @@ c    Output the comparison of computed results to known cases.
     }
   }
 
-  if (*class != 'U') {
+  if (*benchmark_class != 'U') {
     printf(" Comparison of RMS-norms of solution error\n");
   } else {
     printf(" RMS-norms of solution error\n");
   }
         
   for (m = 0; m < 5; m++) {
-    if (*class  ==  'U') {
+    if (*benchmark_class  ==  'U') {
       printf("          %2d  %20.13e\n", m, xce[m]);
     } else if (xcedif[m] > epsilon) {
       *verified = FALSE;
@@ -3474,13 +3474,13 @@ c    Output the comparison of computed results to known cases.
     }
   }
         
-  if (*class != 'U') {
+  if (*benchmark_class != 'U') {
     printf(" Comparison of surface integral\n");
   } else {
     printf(" Surface integral\n");
   }
 
-  if (*class  ==  'U') {
+  if (*benchmark_class  ==  'U') {
     printf("              %20.13e\n", xci);
   } else if (xcidif > epsilon) {
     *verified = FALSE;
@@ -3491,7 +3491,7 @@ c    Output the comparison of computed results to known cases.
 	   xci, xciref, xcidif);
   }
 
-  if (*class  ==  'U') {
+  if (*benchmark_class  ==  'U') {
     printf(" No reference values provided\n");
     printf(" No verification performed\n");
   } else if (*verified) {

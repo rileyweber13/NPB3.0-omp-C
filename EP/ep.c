@@ -255,7 +255,7 @@ c       vectorizable.
 	printf("%3d %15.0f\n", i, q[i]);
     }
 	  
-    c_print_results("EP", CLASS, M+1, 0, 0, nit, nthreads,
+    c_print_results("EP", BENCHMARK_CLASS, M+1, 0, 0, nit, nthreads,
 		  tm, Mops, 	
 		  "Random numbers generated",
 		  verified, NPBVERSION, COMPILETIME,

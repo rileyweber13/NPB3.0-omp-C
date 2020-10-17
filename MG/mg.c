@@ -143,19 +143,19 @@ c---------------------------------------------------------------------*/
     }
 
     if ( (nx[lt] != ny[lt]) || (nx[lt] != nz[lt]) ) {
-	Class = 'U';
+      benchmark_class = 'U';
     } else if( nx[lt] == 32 && nit == 4 ) {
-	Class = 'S';
+      benchmark_class = 'S';
     } else if( nx[lt] == 64 && nit == 40 ) {
-	Class = 'W';
+      benchmark_class = 'W';
     } else if( nx[lt] == 256 && nit == 20 ) {
-	Class = 'B';
+      benchmark_class = 'B';
     } else if( nx[lt] == 512 && nit == 20 ) {
-	Class = 'C';
+      benchmark_class = 'C';
     } else if( nx[lt] == 256 && nit == 4 ) {
-	Class = 'A';
+      benchmark_class = 'A';
     } else {
-	Class = 'U';
+      benchmark_class = 'U';
     }
 
 /*--------------------------------------------------------------------
@@ -177,7 +177,7 @@ c-------------------------------------------------------------------*/
     a[2] =  1.0/6.0;
     a[3] =  1.0/12.0;
 
-    if (Class == 'A' || Class == 'S' || Class =='W') {
+    if (benchmark_class == 'A' || benchmark_class == 'S' || benchmark_class == 'W') {
 /*--------------------------------------------------------------------
 c     Coefficients for the S(a) smoother
 c-------------------------------------------------------------------*/
@@ -237,7 +237,7 @@ c-------------------------------------------------------------------*/
     printf(" about to evaluate resid, k= %d\n", lt);*/
 
     printf(" Size: %3dx%3dx%3d (class %1c)\n",
-	   nx[lt], ny[lt], nz[lt], Class);
+           nx[lt], ny[lt], nz[lt], benchmark_class);
     printf(" Iterations: %3d\n", nit);
 
     resid(u[lt],v,r[lt],n1,n2,n3,a,lt);
@@ -286,17 +286,17 @@ c---------------------------------------------------------------------*/
     printf(" Initialization time: %15.3f seconds\n", tinit);
     printf(" Benchmark completed\n");
 
-    if (Class != 'U') {
-	if (Class == 'S') {
+    if (benchmark_class != 'U') {
+	if (benchmark_class == 'S') {
             verify_value = 0.530770700573e-04;
-	} else if (Class == 'W') {
+	} else if (benchmark_class == 'W') {
             verify_value = 0.250391406439e-17;  /* 40 iterations*/
 /*				0.183103168997d-044 iterations*/
-	} else if (Class == 'A') {
+	} else if (benchmark_class == 'A') {
             verify_value = 0.2433365309e-5;
-        } else if (Class == 'B') {
+        } else if (benchmark_class == 'B') {
             verify_value = 0.180056440132e-5;
-        } else if (Class == 'C') {
+        } else if (benchmark_class == 'C') {
             verify_value = 0.570674826298e-06;
 	}
 
@@ -324,10 +324,10 @@ c---------------------------------------------------------------------*/
 	mflops = 0.0;
     }
 
-    c_print_results("MG", Class, nx[lt], ny[lt], nz[lt], 
-		    nit, nthreads, t, mflops, "          floating point", 
-		    verified, NPBVERSION, COMPILETIME,
-		    CS1, CS2, CS3, CS4, CS5, CS6, CS7);
+    c_print_results("MG", benchmark_class, nx[lt], ny[lt], nz[lt],
+                    nit, nthreads, t, mflops, "          floating point",
+                    verified, NPBVERSION, COMPILETIME,
+                    CS1, CS2, CS3, CS4, CS5, CS6, CS7);
 }
 
 /*--------------------------------------------------------------------
