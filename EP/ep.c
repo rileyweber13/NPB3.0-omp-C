@@ -110,7 +110,7 @@ c   sure these initializations cannot be eliminated as dead code.
 #pragma omp parallel for default(shared) private(i)
     for (i = 0; i < 2*NK; i++) x[i] = -1.0e99;
     
-    Mops = log(sqrt(fabs(max(1.0, 1.0))));
+    Mops = log(sqrt(fabs(std::max(1.0, 1.0))));
 
     timer_clear(1);
     timer_clear(2);
@@ -189,7 +189,7 @@ c       vectorizable.
 		t2 = sqrt(-2.0 * log(t1) / t1);
 		t3 = (x1 * t2);				/* Xi */
 		t4 = (x2 * t2);				/* Yi */
-		l = max(fabs(t3), fabs(t4));
+		l = std::max(fabs(t3), fabs(t4));
 		qq[l] += 1.0;				/* counts */
 		sx = sx + t3;				/* sum of Xi */
 		sy = sy + t4;				/* sum of Yi */

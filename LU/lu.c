@@ -2889,7 +2889,7 @@ c   diffusion coefficients
 /*--------------------------------------------------------------------
 c   fourth difference dissipation
 --------------------------------------------------------------------*/
-  dssp = ( max (dx1, max(dy1, dz1) ) ) / 4.0;
+  dssp = ( std::max (dx1, std::max(dy1, dz1) ) ) / 4.0;
 
 /*--------------------------------------------------------------------
 c   coefficients of the exact solution to the first pde

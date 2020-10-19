@@ -898,9 +898,9 @@ c-------------------------------------------------------------------*/
       for (i = 0; i <= grid_points[0]-1; i++) {
 	ru1 = c3c4*rho_i[i][j][k];
 	cv[i] = us[i][j][k];
-	rhon[i] = max(dx2+con43*ru1, 
-		      max(dx5+c1c5*ru1,
-			  max(dxmax+ru1,
+	rhon[i] = std::max(dx2+con43*ru1,
+		      std::max(dx5+c1c5*ru1,
+			  std::max(dxmax+ru1,
 			      dx1)));
       }
 
@@ -1012,9 +1012,9 @@ c-------------------------------------------------------------------*/
       for (j = 0; j <= grid_points[1]-1; j++) {
 	ru1 = c3c4*rho_i[i][j][k];
 	cv[j] = vs[i][j][k];
-	rhoq[j] = max(dy3 + con43 * ru1,
-		      max(dy5 + c1c5*ru1,
-			  max(dymax + ru1,
+	rhoq[j] = std::max(dy3 + con43 * ru1,
+		      std::max(dy5 + c1c5*ru1,
+			  std::max(dymax + ru1,
 			      dy1)));
       }
             
@@ -1127,9 +1127,9 @@ c-------------------------------------------------------------------*/
       for (k = 0; k <= grid_points[2]-1; k++) {
 	ru1 = c3c4*rho_i[i][j][k];
 	cv[k] = ws[i][j][k];
-	rhos[k] = max(dz4 + con43 * ru1,
-		      max(dz5 + c1c5 * ru1,
-			  max(dzmax + ru1,
+	rhos[k] = std::max(dz4 + con43 * ru1,
+		      std::max(dz5 + c1c5 * ru1,
+			  std::max(dzmax + ru1,
 			      dz1)));
       }
 
@@ -1865,11 +1865,11 @@ static void set_constants(void) {
   dz4 = 1.0;
   dz5 = 1.0;
 
-  dxmax = max(dx3, dx4);
-  dymax = max(dy2, dy4);
-  dzmax = max(dz2, dz3);
+  dxmax = std::max(dx3, dx4);
+  dymax = std::max(dy2, dy4);
+  dzmax = std::max(dz2, dz3);
 
-  dssp = 0.25 * max(dx1, max(dy1, dz1) );
+  dssp = 0.25 * std::max(dx1, std::max(dy1, dz1) );
 
   c4dssp = 4.0 * dssp;
   c5dssp = 5.0 * dssp;

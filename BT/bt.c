@@ -157,15 +157,12 @@ c-------------------------------------------------------------------*/
 
     if (step%20 == 0 || step == 1) {
       printf(" Time step %4d\n", step);
+#ifdef FHV_PERFMON
+      fhv_perfmon::nextGroup();
+#endif
     }
 
-#ifdef FHV_PERFMON
-    fhv_perfmon::startRegion("adi_all_computation");
-#endif
     adi();
-#ifdef FHV_PERFMON
-    fhv_perfmon::stopRegion("adi_all_computation");
-#endif
   }
   
 #pragma omp parallel
@@ -194,6 +191,13 @@ c-------------------------------------------------------------------*/
 		  tmax, mflops, "          floating point", 
 		  verified, NPBVERSION,COMPILETIME, CS1, CS2, CS3, CS4, CS5, 
 		  CS6, "(none)");
+
+#ifdef FHV_PERFMON
+  fhv_perfmon::close();
+
+  fhv_perfmon::printHighlights();
+  fhv_perfmon::resultsToJson();
+#endif
 }
 
 /*--------------------------------------------------------------------
@@ -224,7 +228,12 @@ c-------------------------------------------------------------------*/
 
 static void adi(void) {
 #pragma omp parallel
+{
+#ifdef FHV_PERFMON
+    fhv_perfmon::startRegion("adi_all_computation");
+#endif
     compute_rhs();
+}
 
 #pragma omp parallel
     x_solve();
@@ -236,7 +245,12 @@ static void adi(void) {
     z_solve();
 
 #pragma omp parallel
+{
     add();
+#ifdef FHV_PERFMON
+    fhv_perfmon::stopRegion("adi_all_computation");
+#endif
+}
 }
 
 /*--------------------------------------------------------------------
@@ -2339,11 +2353,11 @@ static void set_constants(void) {
   dz4 = 1.0;
   dz5 = 1.0;
 
-  dxmax = max(dx3, dx4);
-  dymax = max(dy2, dy4);
-  dzmax = max(dz2, dz3);
+  dxmax = std::max(dx3, dx4);
+  dymax = std::max(dy2, dy4);
+  dzmax = std::max(dz2, dz3);
 
-  dssp = 0.25 * max(dx1, max(dy1, dz1) );
+  dssp = 0.25 * std::max(dx1, std::max(dy1, dz1) );
 
   c4dssp = 4.0 * dssp;
   c5dssp = 5.0 * dssp;

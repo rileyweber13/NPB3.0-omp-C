@@ -28,17 +28,17 @@
 # suuply environment variables like LD_LIBRARY_PATH
 #---------------------------------------------------------------------------
 
-#FHV_PERFMON_PREFIX=/usr/local/fhv
-#LIKWID_PREFIX=/usr/local/likwid-master
+FHV_PERFMON_PREFIX=/usr/local/fhv
+LIKWID_PREFIX=/usr/local/likwid-master
 
-#FHV_INC_FLAG=-I$(FHV_PERFMON_PREFIX)/include
-#FHV_LIB_DIR=$(FHV_PERFMON_PREFIX)/lib
-#FHV_LIB_FLAGS=-L$(FHV_LIB_DIR) -lfhv_perfmon
+FHV_INC_FLAG=-I$(FHV_PERFMON_PREFIX)/include
+FHV_LIB_DIR=$(FHV_PERFMON_PREFIX)/lib
+FHV_LIB_FLAGS=-L$(FHV_LIB_DIR) -lfhv_perfmon
 
-#LIKWID_INC_FLAG=-I$(LIKWID_PREFIX)/include
-#LIKWID_LIB_FLAGS=-L$(LIKWID_PREFIX)/lib -llikwid
+LIKWID_INC_FLAG=-I$(LIKWID_PREFIX)/include
+LIKWID_LIB_FLAGS=-L$(LIKWID_PREFIX)/lib -llikwid
 
-#USE_FHV_FLAG=-DFHV_PERFMON
+USE_FHV_FLAG=-DFHV_PERFMON
 
 #RUN_CMD_PREFIX=LD_LIBRARY_PATH=$(LIKWID_PREFIX)/lib:$(FHV_LIB_DIR) \
 #PATH=$(LIKWID_PREFIX)/sbin:$(LIKWID_PREFIX)/bin:$$PATH
@@ -97,7 +97,7 @@ CLINKFLAGS = -fopenmp
 # this compiler go here also; typically there are few flags required; hence 
 # there are no separate macros provided for such flags.
 #---------------------------------------------------------------------------
-UCC	= cc -O
+UCC	= g++ -O
 
 
 #---------------------------------------------------------------------------

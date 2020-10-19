@@ -2,6 +2,7 @@
   NAS Parallel Benchmarks 2.3 OpenMP C Versions
  */
 
+#include <algorithm>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -15,8 +16,6 @@ typedef struct { double real; double imag; } dcomplex;
 #define TRUE	1
 #define FALSE	0
 
-#define max(a,b) (((a) > (b)) ? (a) : (b))
-#define min(a,b) (((a) < (b)) ? (a) : (b))
 #define	pow2(a) ((a)*(a))
 
 #define get_real(c) c.real
