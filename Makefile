@@ -53,7 +53,7 @@ clean:
 	- rm -f sys/setparams sys/makesuite sys/setparams.h
 
 veryclean: clean
-	- rm config/make.def config/suite.def Part*
+	-# rm config/make.def config/suite.def Part*
 	- rm bin/sp.* bin/lu.* bin/mg.* bin/ft.* bin/bt.* bin/is.* bin/ep.* bin/cg.*
 
 header:
