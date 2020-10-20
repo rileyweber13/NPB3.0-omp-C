@@ -82,8 +82,12 @@ C_INC = $(USE_FHV_FLAG) $(LIKWID_INC_FLAG) $(FHV_INC_FLAG) -I../common
 #---------------------------------------------------------------------------
 # Global *compile time* flags for C programs
 #---------------------------------------------------------------------------
-CFLAGS	= -O3 -fopenmp
-# CFLAGS = -g
+# these are some sensible defaults. '-w' is included because compiling with
+# g++ produces a huge number of warnings
+CFLAGS	= -O3 -fopenmp -march=native -w
+
+# alternatively, debug options
+#CFLAGS = -g
 
 #---------------------------------------------------------------------------
 # Global *link time* flags. Flags for increasing maximum executable 
@@ -99,7 +103,7 @@ CLINKFLAGS = -fopenmp
 # this compiler go here also; typically there are few flags required; hence 
 # there are no separate macros provided for such flags.
 #---------------------------------------------------------------------------
-UCC	= g++ -O
+UCC	= g++ -O -w
 
 
 #---------------------------------------------------------------------------
