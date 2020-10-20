@@ -34,6 +34,21 @@ https://github.com/rileyweber13/fine-hardware-visualization
 Information about downloading and building likwid may be found here:
 https://github.com/RRZE-HPC/likwid
 
+1.1 Quickstart
+
+  0. If you want to use FHV metering, resolve dependencies (see above)
+  1. Copy `config/make.def.template` to `config/make.def` and copy
+     `config/suite.def.template` to `config/suite.def`
+  2. Edit `make.def` and `suite.def` as you like. In particular, if you want
+     to use FHV metering, look for the section "Fine Hardware Visualization
+     (FHV) configuration", uncomment the lines in that section, and adjust the
+     prefixes according to your configuration
+  3. You may now compile benchmarks. The format is
+     `make <benchmark> CLASS=<class>`, where class is be one of: 'S', 'W',
+     'A', 'B', or 'C'. For example, with BT, run `make bt CLASS=A`.
+     Alternatively, run `make suite` to make everything specified in
+     `config/suite.def`.
+
 2. Change Log
 
 This section tracks all the modifications that were made to update the

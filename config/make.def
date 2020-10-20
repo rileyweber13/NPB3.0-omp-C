@@ -28,8 +28,10 @@
 # suuply environment variables like LD_LIBRARY_PATH
 #---------------------------------------------------------------------------
 
+# these two lines are the only ones that should need to be edited!
 FHV_PERFMON_PREFIX=/usr/local/fhv
 LIKWID_PREFIX=/usr/local/likwid-master
+
 
 FHV_INC_FLAG=-I$(FHV_PERFMON_PREFIX)/include
 FHV_LIB_DIR=$(FHV_PERFMON_PREFIX)/lib

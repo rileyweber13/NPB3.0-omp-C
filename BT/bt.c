@@ -195,7 +195,7 @@ c-------------------------------------------------------------------*/
 #ifdef FHV_PERFMON
   fhv_perfmon::close();
 
-  fhv_perfmon::printHighlights();
+//  fhv_perfmon::printHighlights();
   fhv_perfmon::resultsToJson();
 #endif
 }
@@ -227,30 +227,70 @@ c-------------------------------------------------------------------*/
 --------------------------------------------------------------------*/
 
 static void adi(void) {
+  const char * TAG_ALL = "adi_all_computation";
+  const char * TAG_RHS = "compute_rhs";
+  const char * TAG_X = "x_solve";
+  const char * TAG_Y = "y_solve";
+  const char * TAG_Z = "z_solve";
+  const char * TAG_ADD = "add";
+
 #pragma omp parallel
 {
 #ifdef FHV_PERFMON
-    fhv_perfmon::startRegion("adi_all_computation");
+    fhv_perfmon::startRegion(TAG_ALL);
+    fhv_perfmon::startRegion(TAG_RHS);
 #endif
     compute_rhs();
+#ifdef FHV_PERFMON
+    fhv_perfmon::stopRegion(TAG_RHS);
+#endif
 }
-
-#pragma omp parallel
-    x_solve();
-
-#pragma omp parallel
-    y_solve();
-
-#pragma omp parallel
-    z_solve();
 
 #pragma omp parallel
 {
-    add();
 #ifdef FHV_PERFMON
-    fhv_perfmon::stopRegion("adi_all_computation");
+    fhv_perfmon::startRegion(TAG_X);
+#endif
+  x_solve();
+#ifdef FHV_PERFMON
+    fhv_perfmon::stopRegion(TAG_X);
 #endif
 }
+
+#pragma omp parallel
+{
+#ifdef FHV_PERFMON
+    fhv_perfmon::startRegion(TAG_Y);
+#endif
+  y_solve();
+#ifdef FHV_PERFMON
+    fhv_perfmon::stopRegion(TAG_Y);
+#endif
+}
+
+#pragma omp parallel
+{
+#ifdef FHV_PERFMON
+    fhv_perfmon::startRegion(TAG_Z);
+#endif
+  z_solve();
+#ifdef FHV_PERFMON
+    fhv_perfmon::stopRegion(TAG_Z);
+#endif
+}
+
+#pragma omp parallel
+{
+#ifdef FHV_PERFMON
+    fhv_perfmon::startRegion(TAG_ADD);
+#endif
+    add();
+#ifdef FHV_PERFMON
+    fhv_perfmon::stopRegion(TAG_ALL);
+    fhv_perfmon::stopRegion(TAG_ADD);
+#endif
+}
+
 }
 
 /*--------------------------------------------------------------------
