@@ -3,3 +3,7 @@
 bin
 *params.h
 setparams
+
+# editor files
+.idea
+.vscode
