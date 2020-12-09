@@ -38,6 +38,22 @@
 /* global variables */
 #include "applu.h"
 
+/* FHV includes, if desired */
+#ifdef FHV_PERFMON
+#include <fhv_perfmon.hpp>
+#include <likwid.h>
+
+// tags
+const char * TAG_ALL = "all_computation";
+const char * TAG_SSOR = "ssor";
+const char * TAG_JACLD = "jacld";
+const char * TAG_BLTS = "blts";
+const char * TAG_JACU = "jacu";
+const char * TAG_BUTS = "buts";
+const char * TAG_RHS = "rhs";
+const char * TAG_L2NORM= "l2norm";
+#endif
+
 #if defined(_OPENMP)
 /* for thread synchronization */
 static boolean flag[ISIZ1/2*2+1];
@@ -101,6 +117,11 @@ c
   boolean verified;
   double mflops;
   int nthreads = 1;
+
+	// initialize FHV
+#ifdef FHV_PERFMON
+  fhv_perfmon::init();
+#endif
 
 /*--------------------------------------------------------------------
 c   read input data
@@ -198,6 +219,10 @@ c
 c                     v <-- ( L-inv ) * v
 c
 --------------------------------------------------------------------*/
+
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_BLTS);
+  #endif
 
 /*--------------------------------------------------------------------
 c  local variables
@@ -410,6 +435,10 @@ c   back substitution
 #pragma omp flush(flag)    
 #endif /* _OPENMP */    
   }
+
+  #ifdef FHV_PERFMON
+  fhv_perfmon::stopRegion(TAG_BLTS);
+  #endif
 }
 
 /*--------------------------------------------------------------------
@@ -436,6 +465,10 @@ c
 c                     v <-- ( U-inv ) * v
 c
 --------------------------------------------------------------------*/
+
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_BUTS);
+  #endif
 
 /*--------------------------------------------------------------------
 c  local variables
@@ -650,6 +683,11 @@ c   back substitution
 #pragma omp flush(flag)
 #endif /* _OPENMP */    
   }
+
+  #ifdef FHV_PERFMON
+  fhv_perfmon::stopRegion(TAG_BUTS);
+  #endif
+
 }
 
 /*--------------------------------------------------------------------
@@ -1990,6 +2028,9 @@ c   for even number sizes only.  Only needed in v.
 
 #pragma omp parallel 
 {
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_L2NORM);
+  #endif
 
 /*--------------------------------------------------------------------
 c   to compute the l2-norm of vector v.
@@ -2033,6 +2074,10 @@ c  local variables
   for (m = 0;  m < 5; m++) {
     sum[m] = sqrt ( sum[m] / ( (nx0-2)*(ny0-2)*(nz0-2) ) );
   }
+
+  #ifdef FHV_PERFMON
+  fhv_perfmon::stopRegion(TAG_L2NORM);
+  #endif
 }
 }
 /*--------------------------------------------------------------------
@@ -2331,6 +2376,9 @@ static void rhs(void) {
 #pragma omp parallel 
 {
 
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_RHS);
+  #endif
 /*--------------------------------------------------------------------
 c   compute the right hand sides
 --------------------------------------------------------------------*/
@@ -2758,6 +2806,10 @@ c   fourth-order dissipation
       }
     }
   }
+
+  #ifdef FHV_PERFMON
+  fhv_perfmon::stopRegion(TAG_RHS);
+  #endif
 }
 
 }
@@ -3097,6 +3149,7 @@ c   compute the L2 norms of newton iteration residuals
   timer_clear(1);
   timer_start(1);
  
+
 /*--------------------------------------------------------------------
 c   the timestep loop
 --------------------------------------------------------------------*/
@@ -3104,17 +3157,27 @@ c   the timestep loop
 
   for (istep = 1; istep <= itmax; istep++) {
 
+#pragma omp parallel private(i,j,k,m)
+{  
+
     if (istep%20  ==  0 || istep  ==  itmax || istep  ==  1) {
 #pragma omp master	
       printf(" Time step %4d\n", istep);
+#ifdef FHV_PERFMON
+      fhv_perfmon::nextGroup();
+#endif
     }
 
-#pragma omp parallel private(istep,i,j,k,m)
-{  
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_ALL);
+  #endif
  
 /*--------------------------------------------------------------------
 c   perform SSOR iteration
 --------------------------------------------------------------------*/
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_SSOR);
+  #endif
 #pragma omp for    
     for (i = ist; i <= iend; i++) {
       for (j = jst; j <= jend; j++) {
@@ -3125,12 +3188,22 @@ c   perform SSOR iteration
 	}
       }
     }
+  #ifdef FHV_PERFMON
+  fhv_perfmon::stopRegion(TAG_SSOR);
+  #endif
 
     for (k = 1; k <= nz - 2; k++) {
 /*--------------------------------------------------------------------
 c   form the lower triangular part of the jacobian matrix
 --------------------------------------------------------------------*/
+
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_JACLD);
+  #endif
       jacld(k);
+  #ifdef FHV_PERFMON
+  fhv_perfmon::stopRegion(TAG_JACLD);
+  #endif
  
 /*--------------------------------------------------------------------
 c   perform the lower triangular solution
@@ -3149,7 +3222,13 @@ c   perform the lower triangular solution
 /*--------------------------------------------------------------------
 c   form the strictly upper triangular part of the jacobian matrix
 --------------------------------------------------------------------*/
+  #ifdef FHV_PERFMON
+  fhv_perfmon::startRegion(TAG_JACU);
+  #endif
       jacu(k);
+  #ifdef FHV_PERFMON
+  fhv_perfmon::stopRegion(TAG_JACU);
+  #endif
 
 /*--------------------------------------------------------------------
 c   perform the upper triangular solution
@@ -3178,10 +3257,13 @@ c   update the variables
 	}
       }
     }
+
 } /* end parallel */
 /*--------------------------------------------------------------------
 c   compute the max-norms of newton iteration corrections
 --------------------------------------------------------------------*/
+    // when using FHV, `l2norm()` and `rhs()` are measured, but the 
+    // respective regions are started and stopped within each function
     if ( istep % inorm  ==  0 ) {
       l2norm( nx0, ny0, nz0,
 	      ist, iend, jst, jend,
@@ -3213,13 +3295,27 @@ c   check the newton-iteration residuals against the tolerance levels
 	 ( rsdnm[4] < tolrsd[4] ) ) {
 	exit(1);
     }
-  }
 
- 
+    #pragma omp parallel
+    {
+		  #ifdef FHV_PERFMON
+		  fhv_perfmon::stopRegion(TAG_ALL);
+		  #endif
+    }
+  } // end time step loop
+
   timer_stop(1);
   maxtime= timer_read(1);
+
+
+#ifdef FHV_PERFMON
+  fhv_perfmon::close();
+
+//  fhv_perfmon::printHighlights();
+  fhv_perfmon::resultsToJson();
+#endif
  
-}
+} // end function
 
 /*--------------------------------------------------------------------
 --------------------------------------------------------------------*/
