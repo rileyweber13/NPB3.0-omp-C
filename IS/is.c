@@ -56,15 +56,15 @@
 /******************/
 /* default values */
 /******************/
-#ifndef benchmark_class
-#define benchmark_class 'S'
+#ifndef CLASS
+#define CLASS 'S'
 #endif
 
 
 /*************/
 /*  CLASS S  */
 /*************/
-#if benchmark_class == 'S'
+#if CLASS == 'S'
 #define  TOTAL_KEYS_LOG_2    16
 #define  MAX_KEY_LOG_2       11
 #define  NUM_BUCKETS_LOG_2   9
@@ -74,7 +74,7 @@
 /*************/
 /*  CLASS W  */
 /*************/
-#if benchmark_class == 'W'
+#if CLASS == 'W'
 #define  TOTAL_KEYS_LOG_2    20
 #define  MAX_KEY_LOG_2       16
 #define  NUM_BUCKETS_LOG_2   10
@@ -83,7 +83,7 @@
 /*************/
 /*  CLASS A  */
 /*************/
-#if benchmark_class == 'A'
+#if CLASS == 'A'
 #define  TOTAL_KEYS_LOG_2    23
 #define  MAX_KEY_LOG_2       19
 #define  NUM_BUCKETS_LOG_2   10
@@ -93,7 +93,7 @@
 /*************/
 /*  CLASS B  */
 /*************/
-#if benchmark_class == 'B'
+#if CLASS == 'B'
 #define  TOTAL_KEYS_LOG_2    25
 #define  MAX_KEY_LOG_2       21
 #define  NUM_BUCKETS_LOG_2   10
@@ -103,12 +103,11 @@
 /*************/
 /*  CLASS C  */
 /*************/
-#if benchmark_class == 'C'
+#if CLASS == 'C'
 #define  TOTAL_KEYS_LOG_2    27
 #define  MAX_KEY_LOG_2       23
 #define  NUM_BUCKETS_LOG_2   10
 #endif
-
 
 #define  TOTAL_KEYS          (1 << TOTAL_KEYS_LOG_2)
 #define  MAX_KEY             (1 << MAX_KEY_LOG_2)
@@ -433,7 +432,7 @@ void rank( int iteration )
     {                                             
         k = partial_verify_vals[i];          /* test vals were put here */
         if( 0 <= k  &&  k <= NUM_KEYS-1 )
-            switch( benchmark_class )
+            switch( CLASS )
             {
                 case 'S':
                     if( i <= 2 )
@@ -587,10 +586,11 @@ main(int argc, char **argv)
     double          timecounter, maxtime;
 
 
+    printf("class: %s\n", CLASS);
 
 /*  Initialize the verification arrays if a valid class */
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
-        switch( benchmark_class )
+        switch( CLASS )
         {
             case 'S':
                 test_index_array[i] = S_test_index_array[i];
@@ -619,7 +619,7 @@ main(int argc, char **argv)
 /*  Printout initial NPB info */
     printf( "\n\n NAS Parallel Benchmarks 2.3 OpenMP C version"
 	    " - IS Benchmark\n\n" );
-    printf( " Size:  %d  (class %c)\n", TOTAL_KEYS, benchmark_class );
+    printf( " Size:  %d  (class %c)\n", TOTAL_KEYS, CLASS );
     printf( " Iterations:   %d\n", MAX_ITERATIONS );
 
 /*  Initialize timer  */             
@@ -638,7 +638,7 @@ main(int argc, char **argv)
 /*  Start verification counter */
     passed_verification = 0;
 
-    if( benchmark_class != 'S' ) printf( "\n   iteration\n" );
+    if( CLASS != 'S' ) printf( "\n   iteration\n" );
 
 /*  Start timer  */             
     timer_start( 0 );
@@ -650,7 +650,7 @@ main(int argc, char **argv)
     for( iteration=1; iteration<=MAX_ITERATIONS; iteration++ )
     {
 #pragma omp master	
-        if( benchmark_class != 'S' ) printf( "        %d\n", iteration );
+        if( CLASS != 'S' ) printf( "        %d\n", iteration );
 	
         rank( iteration );
 	
@@ -675,7 +675,7 @@ main(int argc, char **argv)
     if( passed_verification != 5*MAX_ITERATIONS + 1 )
         passed_verification = 0;
     c_print_results( "IS",
-                     benchmark_class,
+                     CLASS,
                      TOTAL_KEYS,
                      0,
                      0,
