@@ -1,0 +1,814 @@
+
+===== PROGRAM CLASS S =====
+
+
+ NAS Parallel Benchmarks 3.0 structured OpenMP C version - LU Benchmark
+
+ Size:  12x 12x 12
+ Iterations:  50
+ Time step    1
+ Time step   20
+ Time step   40
+ Time step   50
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region all_computation | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region buts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region all_computation | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region buts | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 3   | Vectorization ratio                      |                  nan
+
+
+ Verification being performed for class S
+ Accuracy setting for epsilon =  1.0000000000000e-08
+ Comparison of RMS-norms of residual
+           0   1.6196343210975e-02 1.6196343210977e-02 1.1096168423339e-13
+           1   2.1976745164843e-03 2.1976745164821e-03 9.8589195317388e-13
+           2   1.5179927653394e-03 1.5179927653399e-03 3.6354514882786e-13
+           3   1.5029584435996e-03 1.5029584435994e-03 1.4413145951249e-13
+           4   3.4264073155897e-02 3.4264073155896e-02 2.7541663439654e-14
+ Comparison of RMS-norms of solution error
+           0   6.4223319957965e-04 6.4223319957961e-04 6.0099037803946e-14
+           1   8.4144342047366e-05 8.4144342047348e-05 2.1630740139793e-13
+           2   5.8588269616480e-05 5.8588269616485e-05 9.1486308186119e-14
+           3   5.8474222595161e-05 5.8474222595157e-05 5.4118121635432e-14
+           4   1.3103347914111e-03 1.3103347914111e-03 3.3096951392641e-15
+ Comparison of surface integral
+               7.8418928865937e+00 7.8418928865937e+00 1.1326071811291e-16
+ Verification Successful
+
+
+ LU Benchmark Completed
+ Class           =                        S
+ Size            =               12x 12x 12
+ Iterations      =                       50
+ Threads         =                        4
+ Time in seconds =                     1.45
+ Mop/s total     =                    70.47
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =           3.0 structured
+ Compile date    =              09 Dec 2020
+
+ Compile options:
+    CC           = g++
+    CLINK        = g++
+    C_LIB        = $(LIKWID_LIB_FLAGS) $(FHV_LIB_FLAGS) -lm
+    C_INC        = $(USE_FHV_FLAG) $(LIKWID_INC_FLAG) $(FHV_IN...
+    CFLAGS       = -O3 -fopenmp -march=native -w -D'CLASS=${CL...
+    CLINKFLAGS   = -fopenmp
+    RAND         = (none)
+===== PROGRAM CLASS W =====
+
+
+ NAS Parallel Benchmarks 3.0 structured OpenMP C version - LU Benchmark
+
+ Size:  33x 33x 33
+ Iterations: 300
+ Time step    1
+ Time step   20
+ Time step   40
+ Time step   60
+ Time step   80
+ Time step  100
+ Time step  120
+ Time step  140
+ Time step  160
+ Time step  180
+ Time step  200
+ Time step  220
+ Time step  240
+ Time step  260
+ Time step  280
+ Time step  300
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region all_computation | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region buts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region all_computation | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region buts | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 3   | Vectorization ratio                      |                  nan
+
+
+ Verification being performed for class W
+ Accuracy setting for epsilon =  1.0000000000000e-08
+ Comparison of RMS-norms of residual
+           0   1.2365116381922e+01 1.2365116381920e+01 1.4595726340834e-13
+           1   1.3172284777985e+00 1.3172284777990e+00 3.7725864130463e-13
+           2   2.5501207130948e+00 2.5501207130950e+00 9.4212113683551e-14
+           3   2.3261877502524e+00 2.3261877502520e+00 1.8479950944987e-13
+           4   2.8267994441886e+01 2.8267994441890e+01 1.5194678372035e-13
+ Comparison of RMS-norms of solution error
+           0   4.8678771442162e-01 4.8678771442160e-01 5.1202004825553e-14
+           1   5.0646528809815e-02 5.0646528809820e-02 9.3164289153456e-14
+           2   9.2818181019598e-02 9.2818181019600e-02 1.6745773483182e-14
+           3   8.5701265427329e-02 8.5701265427330e-02 1.0039791592273e-14
+           4   1.0842774177923e+00 1.0842774177920e+00 2.5188651868629e-13
+ Comparison of surface integral
+               1.1613993110230e+01 1.1613993110230e+01 3.0589941332677e-14
+ Verification Successful
+
+
+ LU Benchmark Completed
+ Class           =                        W
+ Size            =               33x 33x 33
+ Iterations      =                      300
+ Threads         =                        4
+ Time in seconds =                    28.29
+ Mop/s total     =                   638.51
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =           3.0 structured
+ Compile date    =              09 Dec 2020
+
+ Compile options:
+    CC           = g++
+    CLINK        = g++
+    C_LIB        = $(LIKWID_LIB_FLAGS) $(FHV_LIB_FLAGS) -lm
+    C_INC        = $(USE_FHV_FLAG) $(LIKWID_INC_FLAG) $(FHV_IN...
+    CFLAGS       = -O3 -fopenmp -march=native -w -D'CLASS=${CL...
+    CLINKFLAGS   = -fopenmp
+    RAND         = (none)
+===== PROGRAM CLASS A =====
+
+
+ NAS Parallel Benchmarks 3.0 structured OpenMP C version - LU Benchmark
+
+ Size:  64x 64x 64
+ Iterations: 250
+ Time step    1
+ Time step   20
+ Time step   40
+ Time step   60
+ Time step   80
+ Time step  100
+ Time step  120
+ Time step  140
+ Time step  160
+ Time step  180
+ Time step  200
+ Time step  220
+ Time step  240
+ Time step  250
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 0   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region all_computation | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region buts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region buts | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 3   | Vectorization ratio                      |                  nan
+
+
+ Verification being performed for class A
+ Accuracy setting for epsilon =  1.0000000000000e-08
+ Comparison of RMS-norms of residual
+           0   7.7902107606688e+02 7.7902107606689e+02 1.5177292997953e-14
+           1   6.3402765259692e+01 6.3402765259693e+01 7.2844264181909e-15
+           2   1.9499249727292e+02 1.9499249727292e+02 8.7454778500394e-15
+           3   1.7845301160418e+02 1.7845301160419e+02 3.3446109576583e-15
+           4   1.8384760349464e+03 1.8384760349464e+03 1.0265031854135e-14
+ Comparison of RMS-norms of solution error
+           0   2.9964085685472e+01 2.9964085685472e+01 8.2996010666400e-15
+           1   2.8194576365004e+00 2.8194576365003e+00 1.0238067870416e-14
+           2   7.3473412698776e+00 7.3473412698775e+00 1.3659929182490e-14
+           3   6.7139225687777e+00 6.7139225687777e+00 3.3072261803796e-15
+           4   7.0715315688391e+01 7.0715315688393e+01 2.2708327993527e-14
+ Comparison of surface integral
+               2.6030925604886e+01 2.6030925604886e+01 6.8240248785729e-16
+ Verification Successful
+
+
+ LU Benchmark Completed
+ Class           =                        A
+ Size            =               64x 64x 64
+ Iterations      =                      250
+ Threads         =                        4
+ Time in seconds =                    63.17
+ Mop/s total     =                  1888.59
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =           3.0 structured
+ Compile date    =              09 Dec 2020
+
+ Compile options:
+    CC           = g++
+    CLINK        = g++
+    C_LIB        = $(LIKWID_LIB_FLAGS) $(FHV_LIB_FLAGS) -lm
+    C_INC        = $(USE_FHV_FLAG) $(LIKWID_INC_FLAG) $(FHV_IN...
+    CFLAGS       = -O3 -fopenmp -march=native -w -D'CLASS=${CL...
+    CLINKFLAGS   = -fopenmp
+    RAND         = (none)
+===== PROGRAM CLASS B =====
+
+
+ NAS Parallel Benchmarks 3.0 structured OpenMP C version - LU Benchmark
+
+ Size: 102x102x102
+ Iterations: 250
+ Time step    1
+ Time step   20
+ Time step   40
+ Time step   60
+ Time step   80
+ Time step  100
+ Time step  120
+ Time step  140
+ Time step  160
+ Time step  180
+ Time step  200
+ Time step  220
+ Time step  240
+ Time step  250
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 0   | Vectorization ratio                      |                  nan
+
+WARNING: unreasonably high event value detected:
+
+This event will be discarded. We will try to detect all metrics associated with this event, but do not guarantee to catch all of them.
+
+To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | DRAM_WRITES                              | 18446740000000000000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory evict bandwidth [MBytes/s]        |  71384686826568.8906
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory evict data volume [GBytes]        |   1180591360000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory bandwidth [MBytes/s]              |  71384686835897.5938
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory data volume [GBytes]              |   1180591360154.2822
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region all_computation | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region buts | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 2   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region blts | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacu | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 3   | Vectorization ratio                      |                  nan
+
+
+ Verification being performed for class B
+ Accuracy setting for epsilon =  1.0000000000000e-08
+ Comparison of RMS-norms of residual
+           0   3.5532672969982e+03 3.5532672969983e+03 8.7026438698835e-15
+           1   2.6214750795311e+02 2.6214750795311e+02 3.9030755908524e-15
+           2   8.8333721850952e+02 8.8333721850952e+02 2.4453287730312e-15
+           3   7.7812774739425e+02 7.7812774739425e+02 5.2597098248760e-15
+           4   7.3087969592545e+03 7.3087969592545e+03 3.7331507777951e-16
+ Comparison of RMS-norms of solution error
+           0   1.1401176380213e+02 1.1401176380213e+02 1.9569070031746e-14
+           1   8.1098963655422e+00 8.1098963655422e+00 1.3142142089123e-15
+           2   2.8480597317698e+01 2.8480597317698e+01 3.3680216835904e-15
+           3   2.5905394567832e+01 2.5905394567833e+01 2.1942695646640e-14
+           4   2.6054907504858e+02 2.6054907504857e+02 7.1995374462832e-15
+ Comparison of surface integral
+               4.7887162703308e+01 4.7887162703308e+01 4.4513562444430e-16
+ Verification Successful
+
+
+ LU Benchmark Completed
+ Class           =                        B
+ Size            =              102x102x102
+ Iterations      =                      250
+ Threads         =                        4
+ Time in seconds =                   173.13
+ Mop/s total     =                  2881.24
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =           3.0 structured
+ Compile date    =              09 Dec 2020
+
+ Compile options:
+    CC           = g++
+    CLINK        = g++
+    C_LIB        = $(LIKWID_LIB_FLAGS) $(FHV_LIB_FLAGS) -lm
+    C_INC        = $(USE_FHV_FLAG) $(LIKWID_INC_FLAG) $(FHV_IN...
+    CFLAGS       = -O3 -fopenmp -march=native -w -D'CLASS=${CL...
+    CLINKFLAGS   = -fopenmp
+    RAND         = (none)
+===== PROGRAM CLASS C =====
+
+
+ NAS Parallel Benchmarks 3.0 structured OpenMP C version - LU Benchmark
+
+ Size: 162x162x162
+ Iterations: 250
+ Time step    1
+ Time step   20
+ Time step   40
+ Time step   60
+ Time step   80
+ Time step  100
+ Time step  120
+ Time step  140
+ Time step  160
+ Time step  180
+ Time step  200
+ Time step  220
+ Time step  240
+ Time step  250
+WARNING: unreasonably high event value detected:
+
+This event will be discarded. We will try to detect all metrics associated with this event, but do not guarantee to catch all of them.
+
+To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region rhs | thread 0   | DRAM_WRITES                              | 18446740000000000000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region rhs | thread 0   | Memory evict bandwidth [MBytes/s]        | 205798404641044.2188
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region rhs | thread 0   | Memory evict data volume [GBytes]        |   1180591360000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region rhs | thread 0   | Memory bandwidth [MBytes/s]              | 205798404651526.2188
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region rhs | thread 0   | Memory data volume [GBytes]              |   1180591360060.1316
+
+WARNING: unreasonably high event value detected:
+
+This event will be discarded. We will try to detect all metrics associated with this event, but do not guarantee to catch all of them.
+
+To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | DRAM_READS                               | 36893490000000000000.0000
+
+WARNING: unreasonably high event value detected:
+
+This event will be discarded. We will try to detect all metrics associated with this event, but do not guarantee to catch all of them.
+
+To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | DRAM_WRITES                              | 18446740000000000000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory load bandwidth [MBytes/s]         |  45885365454092.8438
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory load data volume [GBytes]         |   2361183360000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory evict bandwidth [MBytes/s]        |  22942676508420.1172
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory evict data volume [GBytes]        |   1180591360000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory bandwidth [MBytes/s]              |  68828041962512.9609
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region all_computation | thread 0   | Memory data volume [GBytes]              |   3541774720000.0000
+
+WARNING: unreasonably high event value detected:
+
+This event will be discarded. We will try to detect all metrics associated with this event, but do not guarantee to catch all of them.
+
+To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region blts | thread 0   | DRAM_READS                               | 18446740000000000000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region blts | thread 0   | Memory load bandwidth [MBytes/s]         | 120118605527348.0312
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region blts | thread 0   | Memory load data volume [GBytes]         |   1180591360000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region blts | thread 0   | Memory bandwidth [MBytes/s]              | 120118605531173.9531
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region blts | thread 0   | Memory data volume [GBytes]              |   1180591360037.6033
+
+WARNING: unreasonably high event value detected:
+
+This event will be discarded. We will try to detect all metrics associated with this event, but do not guarantee to catch all of them.
+
+To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region buts | thread 0   | DRAM_READS                               | 18446740000000000000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region buts | thread 0   | Memory load bandwidth [MBytes/s]         | 135544809506254.3906
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region buts | thread 0   | Memory load data volume [GBytes]         |   1180591360000.0000
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region buts | thread 0   | Memory bandwidth [MBytes/s]              | 135544809510118.7500
+
+WARNING: unreasonably high metric value detected!
+
+This metric will be discarded. To disable detection and removal of 'unreasonably' high values, set the environment variable 'FHV_KEEP_LARGE_VALUES'.
+
+The erroneous result is printed below:
+region buts | thread 0   | Memory data volume [GBytes]              |   1180591360033.6587
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region rhs | thread 1   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region ssor | thread 3   | Vectorization ratio                      |                  nan
+
+ERROR: likwid returned a NAN result value, which MAY indicate that something went wrong.
+The erroneous result is printed below:
+region jacld | thread 3   | Vectorization ratio                      |                  nan
+
+
+ Verification being performed for class C
+ Accuracy setting for epsilon =  1.0000000000000e-08
+ Comparison of RMS-norms of residual
+           0   1.0376698032354e+04 1.0376698032354e+04 1.4198942787756e-14
+           1   8.9221245880101e+02 8.9221245880101e+02 8.9194883595411e-16
+           2   2.5623881458266e+03 2.5623881458266e+03 2.4845817846838e-15
+           3   2.1919434385783e+03 2.1919434385783e+03 2.9044832089918e-15
+           4   1.7807805726106e+04 1.7807805726106e+04 4.0858249051521e-16
+ Comparison of RMS-norms of solution error
+           0   2.1598639971695e+02 2.1598639971695e+02 1.1579944075892e-14
+           1   1.5578955923987e+01 1.5578955923986e+01 3.5575126895350e-14
+           2   5.4131886307719e+01 5.4131886307721e+01 2.7564894683587e-14
+           3   4.8226264315404e+01 4.8226264315405e+01 1.1344812091541e-14
+           4   4.5590291004323e+02 4.5590291004325e+02 4.4636573936847e-14
+ Comparison of surface integral
+               6.6640455357218e+01 6.6640455357218e+01 4.9046732453674e-15
+ Verification Successful
+
+
+ LU Benchmark Completed
+ Class           =                        C
+ Size            =              162x162x162
+ Iterations      =                      250
+ Threads         =                        4
+ Time in seconds =                   584.32
+ Mop/s total     =                  3489.52
+ Operation type  =           floating point
+ Verification    =               SUCCESSFUL
+ Version         =           3.0 structured
+ Compile date    =              09 Dec 2020
+
+ Compile options:
+    CC           = g++
+    CLINK        = g++
+    C_LIB        = $(LIKWID_LIB_FLAGS) $(FHV_LIB_FLAGS) -lm
+    C_INC        = $(USE_FHV_FLAG) $(LIKWID_INC_FLAG) $(FHV_IN...
+    CFLAGS       = -O3 -fopenmp -march=native -w -D'CLASS=${CL...
+    CLINKFLAGS   = -fopenmp
+    RAND         = (none)
